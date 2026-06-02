@@ -446,10 +446,6 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.body.scroll(0, 0);
             }, 800);
             
-            // Auto start lo-fi ambient beats once dashboard opens to maximize cozy vibe
-            setTimeout(() => {
-                toggleMusicPlayback(true);
-            }, 800);
         }, 600);
     });
 
