@@ -365,17 +365,35 @@ document.addEventListener("DOMContentLoaded", () => {
     const authInput = document.getElementById("proxy-name");
     const loginBtn = document.getElementById("btn-login");
 
+    // Keep button enabled by default to guarantee mobile tap feedback
+    loginBtn.disabled = false;
+
     authInput.addEventListener("input", (e) => {
+        // Aesthetic feedback, button remains clickable
         if (e.target.value.trim().length > 0) {
-            loginBtn.disabled = false;
-        } else {
-            loginBtn.disabled = true;
+            loginBtn.classList.add("btn-neon");
         }
     });
 
     // Submit Authorization Button Trigger
     loginBtn.addEventListener("click", () => {
-        proxyName = authInput.value.trim();
+        // Fallback default name if empty to bypass iOS typing keyboard completely
+        proxyName = authInput.value.trim() || "Sweetheart";
+        
+        // Lock body and scroll viewport to exactly 0 to defeat iOS virtual keyboard displacement
+        window.scrollTo(0, 0);
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+        
+        // Force overflow hidden on HTML and Body
+        document.documentElement.style.overflow = "hidden";
+        document.body.style.overflow = "hidden";
+        document.documentElement.style.position = "fixed";
+        document.body.style.position = "fixed";
+        document.documentElement.style.width = "100%";
+        document.documentElement.style.height = "100%";
+        document.body.style.width = "100%";
+        document.body.style.height = "100%";
         
         // Update user's name across the entire site
         document.getElementById("display-proxy-name").textContent = proxyName.toUpperCase();
@@ -396,7 +414,19 @@ document.addEventListener("DOMContentLoaded", () => {
             
             // Completely disable display of boot-screen after transition completes (prevents scrolling back up)
             setTimeout(() => {
-                document.getElementById("boot-screen").style.display = "none";
+                const bootElement = document.getElementById("boot-screen");
+                bootElement.style.setProperty("display", "none", "important");
+                bootElement.style.setProperty("visibility", "hidden", "important");
+                bootElement.style.setProperty("pointer-events", "none", "important");
+                // Ensure main dashboard is fully visible
+                const dashElement = document.getElementById("main-dashboard");
+                dashElement.style.setProperty("display", "flex", "important");
+                dashElement.style.setProperty("visibility", "visible", "important");
+                // Final scroll reset lock for all elements
+                window.scrollTo(0, 0);
+                document.body.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
+                document.body.scroll(0, 0);
             }, 800);
             
             // Auto start lo-fi ambient beats once dashboard opens to maximize cozy vibe

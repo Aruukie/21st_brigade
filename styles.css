@@ -20,6 +20,7 @@
     /* Layout Rules */
     --font-heading: 'Outfit', sans-serif;
     --font-mono: 'Space Mono', monospace;
+    --font-logo: 'Poppins', sans-serif;
     --border-width: 3px;
     --border-color: #000000;
     --comic-shadow: 6px 6px 0px #000000;
@@ -40,10 +41,16 @@ body {
     color: var(--color-text-dark);
     font-family: var(--font-heading);
     overflow-x: hidden;
+    overflow-y: hidden;
     height: 100vh;
     width: 100vw;
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     user-select: none;
+    touch-action: manipulation;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
 }
 
 /* Scrollbar customization */
@@ -153,7 +160,9 @@ body {
    ========================================================================== */
 
 .screen-section {
-    position: relative;
+    position: fixed;
+    top: 0;
+    left: 0;
     width: 100vw;
     height: 100vh;
     display: flex;
@@ -167,7 +176,9 @@ body {
     transform: translateY(100vh);
     opacity: 0;
     pointer-events: none;
-    position: absolute;
+    position: fixed;
+    top: 0;
+    left: 0;
 }
 
 /* Typography styles */
@@ -518,6 +529,8 @@ body {
 .brand-title {
     font-size: 1.5rem;
     font-weight: 900;
+    font-style: italic;
+    font-family: var(--font-logo);
     text-transform: uppercase;
     letter-spacing: 1px;
     transform: skewX(-4deg);
@@ -2096,5 +2109,92 @@ body {
         font-size: 0.78rem;
         line-height: 1.5;
         min-height: 100px;
+    }
+}
+
+/* ==========================================================================
+   ENHANCED IPHONE & MOBILE VIEWPORT (iPad & Tablet Adjustments)
+   ========================================================================== */
+@media (max-width: 768px) {
+    /* Ensure no scroll jumping on iOS */
+    html {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+    }
+    
+    body {
+        width: 100vw;
+        height: 100vh;
+    }
+
+    .boot-terminal {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .modal-container {
+        max-width: 95vw;
+        box-shadow: 8px 8px 0px #000;
+    }
+
+    .agent-card-layout {
+        grid-template-columns: 1fr;
+        gap: 16px;
+    }
+
+    .dashboard-counter {
+        overflow: hidden !important;
+    }
+
+    .mascot-counter-deck {
+        overflow: hidden !important;
+    }
+
+    .tv-wall-container {
+        overflow-y: auto;
+        max-height: 100%;
+    }
+}
+
+/* ==========================================================================
+   BOOT SCREEN MOBILE OPTIMIZATION
+   ========================================================================== */
+@media (max-width: 500px) {
+    #boot-screen {
+        padding: 10px;
+        justify-content: center;
+    }
+
+    .boot-container {
+        max-width: 100%;
+        border-width: 2px;
+    }
+
+    .boot-terminal {
+        grid-template-columns: 1fr;
+        gap: 15px;
+        padding: 15px;
+    }
+
+    .terminal-logs {
+        height: 180px;
+        font-size: 0.75rem;
+        padding: 10px;
+    }
+
+    .login-auth-box {
+        padding: 15px;
+    }
+
+    .auth-input {
+        font-size: 1.1rem;
+    }
+
+    .btn-zzz {
+        font-size: 0.95rem;
+        padding: 8px 16px;
     }
 }
