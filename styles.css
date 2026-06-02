@@ -1361,11 +1361,25 @@ body.proxy-initialized .crt-overlay {
     width: 95%;
     padding: 6px;
     font-family: var(--font-mono);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
+    text-align: left;
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr);
+    gap: 8px;
+    align-items: center;
     margin-top: 10px;
+}
+
+.cassette-cover-art {
+    width: 48px;
+    height: 48px;
+    border: 2px solid var(--border-color);
+    border-radius: 4px;
+    object-fit: cover;
+    background-color: var(--color-bg-darkest);
+}
+
+.sticker-copy {
+    min-width: 0;
 }
 
 .sticker-line {
@@ -1377,6 +1391,16 @@ body.proxy-initialized .crt-overlay {
 .sticker-title {
     font-size: 0.75rem;
     font-weight: 700;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+.sticker-artist {
+    margin-top: 2px;
+    color: #666;
+    font-size: 0.55rem;
+    font-weight: 700;
+    line-height: 1.1;
 }
 
 .tape-reels {
@@ -1495,7 +1519,7 @@ body.proxy-initialized .crt-overlay {
 
 .playlist-options {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
     gap: 8px;
 }
 
@@ -1525,15 +1549,25 @@ body.proxy-initialized .crt-overlay {
 
 .playlist-option-name {
     display: block;
-    font-size: 0.68rem;
+    font-size: 0.6rem;
     line-height: 1.1;
+    overflow-wrap: anywhere;
+}
+
+.playlist-option-artist {
+    display: block;
+    margin-top: 3px;
+    color: #888899;
+    font-size: 0.48rem;
+    line-height: 1.1;
+    overflow-wrap: anywhere;
 }
 
 .playlist-option-code {
     display: block;
     margin-top: 3px;
     color: #888899;
-    font-size: 0.55rem;
+    font-size: 0.5rem;
 }
 
 .playlist-option.active-playlist {
@@ -1542,6 +1576,10 @@ body.proxy-initialized .crt-overlay {
 }
 
 .playlist-option.active-playlist .playlist-option-code {
+    color: var(--color-bg-darkest);
+}
+
+.playlist-option.active-playlist .playlist-option-artist {
     color: var(--color-bg-darkest);
 }
 
@@ -2086,6 +2124,23 @@ body.proxy-initialized .crt-overlay {
         margin-top: 6px;
         padding: 2px;
     }
+    .tape-label-sticker {
+        grid-template-columns: 34px minmax(0, 1fr);
+        gap: 5px;
+        padding: 4px;
+    }
+    .cassette-cover-art {
+        width: 34px;
+        height: 34px;
+        border-width: 1px;
+    }
+    .sticker-line,
+    .sticker-artist {
+        font-size: 0.45rem;
+    }
+    .sticker-title {
+        font-size: 0.58rem;
+    }
     .tape-reel-window {
         width: 34px;
         height: 34px;
@@ -2109,10 +2164,13 @@ body.proxy-initialized .crt-overlay {
         padding: 4px;
     }
     .playlist-option-name {
-        font-size: 0.52rem;
+        font-size: 0.46rem;
+    }
+    .playlist-option-artist {
+        font-size: 0.4rem;
     }
     .playlist-option-code {
-        font-size: 0.48rem;
+        font-size: 0.42rem;
     }
     .deck-buttons {
         gap: 6px;

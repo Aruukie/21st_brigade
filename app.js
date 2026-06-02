@@ -1,6 +1,6 @@
 /**
  * Cinnamoroll × Zenless Zone Zero (ZZZ) "Random Play" Birthday Sub-Net
- * Core Frontend Logic & Direct Audio Synthesis Engine
+ * Core Frontend Logic, Cassette Playback & UI Sound Effects
  */
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -10,11 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
     let isMusicPlaying = false;
     let letterTyped = false;
 
-    // AUDIO SYNTHESIS ENGINE (Web Audio API)
-    // No external file dependencies - synthesizes high-fidelity retro arcade sounds & a full chord sequencer in real time!
+    // UI SOUND EFFECTS (Web Audio API)
+    // The Sound Archive itself plays real audio files through the cassette deck.
     let audioCtx = null;
-    let synthInterval = null; // music sequencer
-    let currentBeat = 0;
     
     function initAudio() {
         if (!audioCtx) {
@@ -122,196 +120,65 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch(e) {}
     }
 
-    // DYNAMIC RETRO MUSIC SYNTHESIZER
-    // Each Sound Archive playlist uses the same cassette deck, but swaps synth patterns.
-
-    // Happy Birthday progression in F major: F -> C -> C -> F -> F7 -> Bb -> F -> C -> F
-    const birthdayChords = [
-        [174.61, 220.00, 261.63, 349.23], // F Major (F3, A3, C4, F4)
-        [174.61, 220.00, 261.63, 349.23], 
-        [130.81, 196.00, 261.63, 329.63], // C Major (C3, G3, C4, E4)
-        [130.81, 196.00, 261.63, 329.63],
-        [130.81, 196.00, 261.63, 329.63],
-        [130.81, 196.00, 261.63, 329.63],
-        [174.61, 220.00, 261.63, 349.23], // F Major
-        [174.61, 220.00, 261.63, 349.23],
-        [174.61, 220.00, 261.63, 349.23], // F7
-        [174.61, 220.00, 311.13, 349.23], // F7 (F3, A3, Eb4, F4)
-        [116.54, 185.00, 233.08, 293.66], // Bb Major (Bb2, F3, Bb3, D4)
-        [116.54, 185.00, 233.08, 293.66],
-        [174.61, 220.00, 261.63, 349.23], // F Major
-        [130.81, 196.00, 261.63, 329.63], // C Major
-        [174.61, 220.00, 261.63, 349.23], // F Major
-        [174.61, 220.00, 261.63, 349.23]
-    ];
-
-    // Melodic notes sequence mapping standard "Happy Birthday to you"
-    // Format: [Frequency, beatOffset, durationMultiplier]
-    const birthdayMelody = [
-        [349.23, 0, 0.75], // F4 ("Hap-")
-        [349.23, 0.75, 0.25], // F4 ("-py")
-        [392.00, 1.0, 1.0],  // G4 ("Birth-")
-        [349.23, 2.0, 1.0],  // F4 ("-day")
-        [440.00, 3.0, 1.0],  // A4 ("to")
-        [392.00, 4.0, 2.0],  // G4 ("you")
-        
-        [349.23, 6.0, 0.75], // F4 ("Hap-")
-        [349.23, 6.75, 0.25], // F4 ("-py")
-        [392.00, 7.0, 1.0],  // G4 ("Birth-")
-        [349.23, 8.0, 1.0],  // F4 ("-day")
-        [523.25, 9.0, 1.0],  // C5 ("to")
-        [440.00, 10.0, 2.0], // A4 ("you")
-        
-        [349.23, 12.0, 0.75], // F4 ("Hap-")
-        [349.23, 12.75, 0.25], // F4 ("-py")
-        [698.46, 13.0, 1.0],  // F5 ("Birth-")
-        [587.33, 14.0, 1.0],  // D5 ("-day")
-        [440.00, 15.0, 1.0],  // A4 ("dear")
-        [392.00, 16.0, 1.0],  // G4 ("Sweet-")
-        [349.23, 17.0, 1.0],  // F4 ("-heart")
-        
-        [622.25, 18.0, 0.75], // Eb5 ("Hap-")
-        [622.25, 18.75, 0.25], // Eb5 ("-py")
-        [587.33, 19.0, 1.0],  // D5 ("Birth-")
-        [440.00, 20.0, 1.0],  // A4 ("-day")
-        [523.25, 21.0, 1.0],  // C5 ("to")
-        [349.23, 22.0, 2.0]   // F4 ("you")
-    ];
+    // SOUND ARCHIVE SONGS
+    // The cassette deck plays local static audio files. encodeURI keeps Vercel URLs safe.
+    function assetPath(path) {
+        return encodeURI(path);
+    }
 
     const soundArchivePlaylists = [
         {
-            title: "RETRO SYNTH CHILL BEATS (Lofi Loop)",
-            cassetteTitle: "PROXY B-DAY RETRO BEAT",
+            title: "Who Knows",
+            artist: "Daniel Caesar",
+            cassetteTitle: "WHO KNOWS",
             code: "TAPE A",
-            tempo: 95,
-            duration: 150,
-            loopBeats: 32,
-            padWave: "triangle",
-            leadWave: "sine",
-            filterStart: 500,
-            filterEnd: 250,
-            chords: birthdayChords,
-            melody: birthdayMelody
+            duration: 226,
+            audioSources: [assetPath("assets/MUSIC FINAL/Who Knows.mp3")],
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3b/c0/c5/3bc0c51d-33f2-ee19-e148-6d8f2c50df24/25UMGIM90843.rgb.jpg/300x300bb.jpg",
         },
         {
-            title: "CINNAMON CLOUD DRIVE (Dream Pop)",
-            cassetteTitle: "CINNAMON CLOUD DRIVE",
+            title: "Superpowers",
+            artist: "Daniel Caesar",
+            cassetteTitle: "SUPERPOWERS",
             code: "TAPE B",
-            tempo: 82,
-            duration: 180,
-            loopBeats: 16,
-            padWave: "sine",
-            leadWave: "triangle",
-            filterStart: 720,
-            filterEnd: 320,
-            chords: [
-                [146.83, 220.00, 293.66, 369.99],
-                [164.81, 246.94, 329.63, 415.30],
-                [130.81, 196.00, 261.63, 392.00],
-                [174.61, 261.63, 349.23, 440.00]
-            ],
-            melody: [
-                [587.33, 0, 1], [659.25, 2, 1], [739.99, 4, 1.5], [659.25, 7, 1],
-                [523.25, 8, 1], [587.33, 10, 1], [659.25, 12, 2], [493.88, 15, 1]
-            ]
+            duration: 175,
+            audioSources: [assetPath("assets/MUSIC FINAL/Daniel Caesar - Superpowers (Official Audio).mp3")],
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/24/4f/ec/244fec58-ea20-e0b0-eea6-e06c6aff948b/23UMGIM14483.rgb.jpg/300x300bb.jpg",
         },
         {
-            title: "HOLLOW NIGHT PARADE (Arcade Pulse)",
-            cassetteTitle: "HOLLOW NIGHT PARADE",
+            title: "See You Again",
+            artist: "Tyler, The Creator",
+            cassetteTitle: "SEE YOU AGAIN",
             code: "TAPE C",
-            tempo: 118,
-            duration: 135,
-            loopBeats: 16,
-            padWave: "sawtooth",
-            leadWave: "square",
-            filterStart: 640,
-            filterEnd: 420,
-            chords: [
-                [110.00, 164.81, 220.00, 329.63],
-                [98.00, 146.83, 196.00, 293.66],
-                [130.81, 196.00, 261.63, 392.00],
-                [123.47, 185.00, 246.94, 369.99]
-            ],
-            melody: [
-                [440.00, 0, 0.5], [523.25, 1, 0.5], [659.25, 2, 0.5], [523.25, 3, 0.5],
-                [392.00, 4, 0.5], [493.88, 5, 0.5], [587.33, 6, 0.5], [493.88, 7, 0.5],
-                [329.63, 8, 1], [392.00, 10, 1], [493.88, 12, 1], [659.25, 14, 1]
-            ]
+            duration: 180,
+            audioSources: [assetPath("assets/MUSIC FINAL/Tyler, The Creator - See You Again (Audio) ft. Kali Uchis (1).mp3")],
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music125/v4/fd/fd/8c/fdfd8c26-b8f9-4768-41d3-b24773250c65/886446605814.jpg/300x300bb.jpg",
+        },
+        {
+            title: "Roommates",
+            artist: "Malcolm Todd",
+            cassetteTitle: "ROOMMATES",
+            code: "TAPE D",
+            duration: 215,
+            audioSources: [assetPath("assets/MUSIC FINAL/Malcolm Todd - Roommates (Audio).mp3")],
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/33/b8/5a/33b85ad4-cfd1-bcb8-444b-15329d4965ef/196871375542.jpg/300x300bb.jpg",
+        },
+        {
+            title: "Pasilyo",
+            artist: "SunKissed Lola",
+            cassetteTitle: "PASILYO",
+            code: "TAPE E",
+            duration: 270,
+            audioSources: [assetPath("assets/MUSIC FINAL/SunKissed Lola - Pasilyo (Official Lyric Video).mp3")],
+            coverUrl: "https://is1-ssl.mzstatic.com/image/thumb/Music116/v4/73/0c/ef/730cefeb-f4ad-d503-0a25-f34f933c34d6/5063161188159_cover.jpg/300x300bb.jpg",
         }
     ];
 
     let activePlaylistIndex = 0;
     let activePlaylist = soundArchivePlaylists[activePlaylistIndex];
-    let beatDuration = 60 / activePlaylist.tempo;
-
-    function playMusicTick() {
-        if (!isMusicPlaying) return;
-        initAudio();
-        
-        const currentChordIndex = Math.floor(currentBeat / 2) % activePlaylist.chords.length;
-        const currentChord = activePlaylist.chords[currentChordIndex];
-        
-        // 1. Play Soft Pad Chords (Warm Low-Pass Triangles)
-        if (currentBeat % 2 === 0) {
-            currentChord.forEach(freq => {
-                const osc = audioCtx.createOscillator();
-                const gain = audioCtx.createGain();
-                const filter = audioCtx.createBiquadFilter();
-                
-                osc.connect(filter);
-                filter.connect(gain);
-                gain.connect(audioCtx.destination);
-                
-                osc.type = activePlaylist.padWave;
-                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-                
-                filter.type = "lowpass";
-                filter.frequency.setValueAtTime(activePlaylist.filterStart, audioCtx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(activePlaylist.filterEnd, audioCtx.currentTime + beatDuration * 1.8);
-                
-                gain.gain.setValueAtTime(0, audioCtx.currentTime);
-                gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 0.1);
-                gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + beatDuration * 1.9);
-                
-                osc.start();
-                osc.stop(audioCtx.currentTime + beatDuration * 2);
-            });
-        }
-
-        // 2. Play Cozy Lofi Bell Melody
-        // Search if there's a note at this beat offset
-        const loopBeat = currentBeat % activePlaylist.loopBeats;
-        const melodyNote = activePlaylist.melody.find(n => Math.abs(n[1] - loopBeat) < 0.05);
-        if (melodyNote) {
-            const freq = melodyNote[0];
-            const duration = melodyNote[2] * beatDuration;
-            
-            const osc = audioCtx.createOscillator();
-            const gain = audioCtx.createGain();
-            
-            osc.connect(gain);
-            gain.connect(audioCtx.destination);
-            
-            osc.type = activePlaylist.leadWave;
-            osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            
-            gain.gain.setValueAtTime(0, audioCtx.currentTime);
-            gain.gain.linearRampToValueAtTime(0.05, audioCtx.currentTime + 0.03);
-            gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + duration * 0.9);
-            
-            osc.start();
-            osc.stop(audioCtx.currentTime + duration);
-        }
-
-        // 3. Bounce Equalizer UI Bars in exact sync with beats
-        animateEqualizerBars();
-
-        // Progress tape time increment
-        updateMusicProgress();
-
-        // Increment beat count
-        currentBeat++;
-    }
+    let audioSourceAttempt = 0;
+    const cassetteAudio = new Audio();
+    cassetteAudio.preload = "metadata";
 
     function formatTime(totalSeconds) {
         const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
@@ -329,7 +196,8 @@ document.addEventListener("DOMContentLoaded", () => {
             button.type = "button";
             button.dataset.playlistIndex = index;
             button.innerHTML = `
-                <span class="playlist-option-name">${playlist.cassetteTitle}</span>
+                <span class="playlist-option-name">${playlist.title}</span>
+                <span class="playlist-option-artist">${playlist.artist}</span>
                 <span class="playlist-option-code">${playlist.code}</span>
             `;
             button.addEventListener("click", () => selectPlaylist(index));
@@ -338,13 +206,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function updatePlaylistDisplay() {
-        document.getElementById("current-track-name").textContent = activePlaylist.title;
+        document.getElementById("current-track-name").textContent = `${activePlaylist.title} - ${activePlaylist.artist}`;
         document.getElementById("cassette-playlist-title").textContent = activePlaylist.cassetteTitle;
+        document.getElementById("cassette-playlist-artist").textContent = activePlaylist.artist.toUpperCase();
         document.getElementById("track-total-duration").textContent = formatTime(activePlaylist.duration);
+        const coverArt = document.getElementById("cassette-cover-art");
+        coverArt.src = activePlaylist.coverUrl;
+        coverArt.alt = `${activePlaylist.title} cover art`;
 
         document.querySelectorAll(".playlist-option").forEach((button, index) => {
             button.classList.toggle("active-playlist", index === activePlaylistIndex);
         });
+    }
+
+    function loadActiveAudioTrack() {
+        audioSourceAttempt = 0;
+        cassetteAudio.src = activePlaylist.audioSources[audioSourceAttempt];
+        cassetteAudio.load();
+        document.getElementById("track-time-elapsed").textContent = "00:00";
+        document.getElementById("music-progress-fill").style.width = "0%";
+    }
+
+    function tryNextAudioSource() {
+        audioSourceAttempt++;
+        if (audioSourceAttempt < activePlaylist.audioSources.length) {
+            cassetteAudio.src = activePlaylist.audioSources[audioSourceAttempt];
+            cassetteAudio.load();
+            if (isMusicPlaying) {
+                cassetteAudio.play().catch(() => tryNextAudioSource());
+            }
+            return;
+        }
+
+        isMusicPlaying = false;
+        setDeckPlayingState(false);
     }
 
     function selectPlaylist(nextIndex) {
@@ -359,13 +254,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
         activePlaylistIndex = normalizedIndex;
         activePlaylist = soundArchivePlaylists[activePlaylistIndex];
-        beatDuration = 60 / activePlaylist.tempo;
-        currentBeat = 0;
-        elapsedSeconds = 0;
 
-        document.getElementById("track-time-elapsed").textContent = "00:00";
-        document.getElementById("music-progress-fill").style.width = "0%";
         updatePlaylistDisplay();
+        loadActiveAudioTrack();
         playClickSound();
 
         if (wasPlaying) {
@@ -388,59 +279,62 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     function toggleMusicPlayback(play) {
-        initAudio();
         if (play && !isMusicPlaying) {
             playTapeLatchSound();
-            isMusicPlaying = true;
-            currentBeat = 0;
-            
-            // Set up a loop matching our BPM tempo
-            synthInterval = setInterval(playMusicTick, beatDuration * 1000);
-            
-            // Add UI state modifications
-            document.getElementById("reel-left").classList.add("playing");
-            document.getElementById("reel-right").classList.add("playing");
-            document.getElementById("modal-music").classList.add("playing-deck");
-            
-            document.getElementById("deck-play").disabled = true;
-            document.getElementById("deck-pause").disabled = false;
-            document.getElementById("deck-play").classList.add("active-btn");
-            document.getElementById("deck-pause").classList.remove("active-btn");
+            if (!cassetteAudio.src || audioSourceAttempt >= activePlaylist.audioSources.length) {
+                loadActiveAudioTrack();
+            }
+
+            cassetteAudio.play()
+                .then(() => {
+                    isMusicPlaying = true;
+                    setDeckPlayingState(true);
+                })
+                .catch(() => {
+                    isMusicPlaying = false;
+                    setDeckPlayingState(false);
+                });
         } else if (!play && isMusicPlaying) {
             playTapeLatchSound();
             isMusicPlaying = false;
-            clearInterval(synthInterval);
-            
-            document.getElementById("reel-left").classList.remove("playing");
-            document.getElementById("reel-right").classList.remove("playing");
-            document.getElementById("modal-music").classList.remove("playing-deck");
-            animateEqualizerBars(); // resets them to flat
-            
-            document.getElementById("deck-play").disabled = false;
-            document.getElementById("deck-pause").disabled = true;
-            document.getElementById("deck-play").classList.remove("active-btn");
-            document.getElementById("deck-pause").classList.add("active-btn");
+            cassetteAudio.pause();
+            setDeckPlayingState(false);
         }
     }
 
-    // Increment simulated tape time elapsed
-    let elapsedSeconds = 0;
-    
+    function setDeckPlayingState(playing) {
+        document.getElementById("reel-left").classList.toggle("playing", playing);
+        document.getElementById("reel-right").classList.toggle("playing", playing);
+        document.getElementById("modal-music").classList.toggle("playing-deck", playing);
+        document.getElementById("deck-play").disabled = playing;
+        document.getElementById("deck-pause").disabled = !playing;
+        document.getElementById("deck-play").classList.toggle("active-btn", playing);
+        document.getElementById("deck-pause").classList.toggle("active-btn", !playing);
+
+        if (!playing) {
+            animateEqualizerBars();
+        }
+    }
+
     function updateMusicProgress() {
-        if (!isMusicPlaying) return;
-        elapsedSeconds = (elapsedSeconds + beatDuration) % activePlaylist.duration;
+        const duration = Number.isFinite(cassetteAudio.duration) ? cassetteAudio.duration : activePlaylist.duration;
+        const elapsedSeconds = cassetteAudio.currentTime || 0;
         
         // Update numeric counter display
         document.getElementById("track-time-elapsed").textContent = formatTime(elapsedSeconds);
         
         // Progress bar filling
-        const percent = (elapsedSeconds / activePlaylist.duration) * 100;
+        const percent = duration > 0 ? (elapsedSeconds / duration) * 100 : 0;
         document.getElementById("music-progress-fill").style.width = `${percent}%`;
+
+        if (isMusicPlaying) {
+            animateEqualizerBars();
+        }
     }
 
     function resetTape() {
         toggleMusicPlayback(false);
-        elapsedSeconds = 0;
+        cassetteAudio.currentTime = 0;
         document.getElementById("track-time-elapsed").textContent = "00:00";
         document.getElementById("music-progress-fill").style.width = "0%";
     }
@@ -687,6 +581,17 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("playlist-next").addEventListener("click", () => selectPlaylist(activePlaylistIndex + 1));
     renderPlaylistOptions();
     updatePlaylistDisplay();
+    loadActiveAudioTrack();
+
+    cassetteAudio.addEventListener("loadedmetadata", () => {
+        if (Number.isFinite(cassetteAudio.duration)) {
+            activePlaylist.duration = cassetteAudio.duration;
+            document.getElementById("track-total-duration").textContent = formatTime(cassetteAudio.duration);
+        }
+    });
+    cassetteAudio.addEventListener("timeupdate", updateMusicProgress);
+    cassetteAudio.addEventListener("ended", resetTape);
+    cassetteAudio.addEventListener("error", tryNextAudioSource);
 
     // ==========================================================================
     // BIRTHDAY LETTER DECRYPTION TYPEWRITER
