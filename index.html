@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Play // S-Rank Birthday Protocol</title>
+    <!-- Google Fonts: Skewed high-energy headers (Outfit) & monospaced technical codes (Space Mono) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for gaming and tech icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Main Style Sheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- CRT Overlay across the entire screen for scanning scanlines and VHS flicker -->
+    <div class="crt-overlay"></div>
+    <div class="vhs-glitch-overlay" id="glitch-overlay"></div>
+
+    <!-- PHASE 1: RETRO CRT BOOT SCREEN (Proxy Authorization) -->
+    <section class="screen-section" id="boot-screen">
+        <div class="boot-container">
+            <div class="boot-header-stripes"></div>
+            
+            <div class="boot-terminal">
+                <div class="terminal-logs" id="boot-logs">
+                    <p class="log-line">> INITIALIZING RANDOM PLAY SYSTEM...</p>
+                    <p class="log-line">> CONNECTING TO HOLLOW DEEP DIVE MAINBOARD... <span class="text-success">[SUCCESS]</span></p>
+                    <p class="log-line">> SEARCHING FOR SIGNATURE ID: <span class="text-accent">S-RANK_SWEETHEART</span>...</p>
+                    <p class="log-line">> SIGNAL ENERGY: <span class="text-warning">9999+ CUTE_CELLS/SEC</span> (OVERLOAD WARNING!)</p>
+                    <p class="log-line">> BOOTING MASCOT PROGRAM: <span class="text-info">Cinnamoroll.exe</span>...</p>
+                </div>
+
+                <div class="boot-mascot-area">
+                    <div class="mascot-crt-screen">
+                        <!-- We will display the generated Cinnamoroll image with a CRT effect -->
+                        <img src="assets/cinnamoroll_zzz.png" alt="Techwear Cinnamoroll" class="boot-mascot-img">
+                        <div class="crt-noise"></div>
+                    </div>
+                    <div class="mascot-status">
+                        <span class="status-dot pulsing"></span>
+                        <span class="status-text">MASCOT ONLINE [SLEEPING_MODE]</span>
+                    </div>
+                </div>
+
+                <!-- Input area for proxy authorization -->
+                <div class="login-auth-box">
+                    <label for="proxy-name" class="auth-label">ENTER PROXY ACCESS NAME:</label>
+                    <div class="input-wrapper">
+                        <input type="text" id="proxy-name" placeholder="Type her name..." autocomplete="off" class="auth-input">
+                        <span class="input-bracket left">[</span>
+                        <span class="input-bracket right">]</span>
+                    </div>
+                    <button class="btn-zzz btn-neon" id="btn-login" disabled>
+                        <span class="btn-skew-content">INITIALIZE PROXY</span>
+                    </button>
+                </div>
+            </div>
+            
+            <div class="boot-footer">
+                <span class="footer-code">RP-SYSTEM-V2.6.2</span>
+                <span class="footer-warning">HAZARD WARNING: EXTREME SWEETNESS AHEAD</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- PHASE 2: RANDOM PLAY COUNTER (Main Dashboard) -->
+    <section class="screen-section hidden" id="main-dashboard">
+        <!-- Top Nav / Ticker Bar -->
+        <header class="dashboard-header">
+            <div class="brand">
+                <span class="brand-sub">VIDEO RENTAL & CAFE</span>
+                <h1 class="brand-title">RANDOM <span class="text-primary">PLAY</span></h1>
+            </div>
+            <div class="hazard-ticker">
+                <div class="ticker-wrap">
+                    <span class="ticker-item">WARNING: S-RANK ENERGY FIELD EXPANDING</span>
+                    <span class="ticker-item">★ PROXY AUTHENTICATED: <span id="display-proxy-name">SWEETHEART</span> ★</span>
+                    <span class="ticker-item">HAPPY BIRTHDAY PROTOCOL STAGE 01 ACTIVE</span>
+                    <span class="ticker-item">HOLLOW DETECTED // RETRIEVING MEMORIES</span>
+                </div>
+            </div>
+            <div class="system-status">
+                <div class="stat-group">
+                    <span class="stat-label">Hollow Depth:</span>
+                    <span class="stat-val text-warning">ZERO</span>
+                </div>
+                <div class="stat-group">
+                    <span class="stat-label">Signal:</span>
+                    <span class="stat-val text-success">STABLE</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main desk counter grid -->
+        <main class="dashboard-counter">
+            <!-- Left Side: Cozy Wood Panel with Cinnamoroll Dialogue Bubble & Mascot -->
+            <div class="mascot-counter-deck">
+                <div class="wood-accent-shelf"></div>
+                <div class="mascot-interactive-area">
+                    <div class="dialogue-bubble">
+                        <div class="bubble-arrow"></div>
+                        <p class="dialogue-text" id="mascot-speech">Hello, Proxy! Welcome back to Random Play. Click on the TV monitors behind me to unlock your S-Rank Birthday signals!</p>
+                    </div>
+                    <div class="mascot-wrapper">
+                        <img src="assets/cinnamoroll_zzz.png" alt="Mascot Cinnamoroll" class="mascot-img-active" id="mascot-trigger">
+                        <!-- Holographic ring under mascot -->
+                        <div class="holo-base"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side: The TV wall grid (Random Play style CRT stack) -->
+            <div class="tv-wall-container">
+                <div class="tv-wall-header">
+                    <h2 class="title-skew">HDD SIGNAL DECODING PANEL</h2>
+                </div>
+
+                <div class="tv-grid">
+                    <!-- Monitor 1: Agent Card -->
+                    <div class="crt-monitor active-monitor" data-target="modal-agent">
+                        <div class="monitor-screen">
+                            <div class="monitor-content">
+                                <i class="fa-solid fa-address-card tv-icon text-primary"></i>
+                                <span class="tv-label">MEMORY 01</span>
+                                <span class="tv-status">AGENT REGISTER</span>
+                            </div>
+                            <div class="monitor-flicker"></div>
+                        </div>
+                        <div class="monitor-frame">
+                            <span class="frame-tag">M-01</span>
+                            <span class="frame-led led-green"></span>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 2: Audio Player -->
+                    <div class="crt-monitor active-monitor" data-target="modal-music">
+                        <div class="monitor-screen">
+                            <div class="monitor-content">
+                                <i class="fa-solid fa-compact-disc tv-icon text-info spinning-slow"></i>
+                                <span class="tv-label">MEMORY 02</span>
+                                <span class="tv-status">SOUND ARCHIVE</span>
+                            </div>
+                            <div class="monitor-flicker"></div>
+                        </div>
+                        <div class="monitor-frame">
+                            <span class="frame-tag">M-02</span>
+                            <span class="frame-led led-green"></span>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 3: Co-Op Timeline -->
+                    <div class="crt-monitor active-monitor" data-target="modal-timeline">
+                        <div class="monitor-screen">
+                            <div class="monitor-content">
+                                <i class="fa-solid fa-images tv-icon text-success"></i>
+                                <span class="tv-label">MEMORY 03</span>
+                                <span class="tv-status">CO-OP LOGS</span>
+                            </div>
+                            <div class="monitor-flicker"></div>
+                        </div>
+                        <div class="monitor-frame">
+                            <span class="frame-tag">M-03</span>
+                            <span class="frame-led led-green"></span>
+                        </div>
+                    </div>
+
+                    <!-- Monitor 4: Birthday Protocol (The Letter) -->
+                    <div class="crt-monitor active-monitor monitor-alert" data-target="modal-letter">
+                        <div class="monitor-screen">
+                            <div class="monitor-content">
+                                <i class="fa-solid fa-cake-candles tv-icon text-warning pulsing"></i>
+                                <span class="tv-label">DECODE COMPLETE</span>
+                                <span class="tv-status text-warning-glow">BIRTHDAY PROTOCOL</span>
+                            </div>
+                            <div class="monitor-flicker"></div>
+                        </div>
+                        <div class="monitor-frame">
+                            <span class="frame-tag">ALERT</span>
+                            <span class="frame-led led-red pulsing-fast"></span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- VHS Tapes Shelf Stack Decorator -->
+                <div class="vhs-shelf">
+                    <span class="shelf-tag">COZY SHELF</span>
+                    <div class="tape-stack">
+                        <div class="vhs-tape tape-yellow" id="tape-retro"><span class="tape-label">LO-FI RETRO</span></div>
+                        <div class="vhs-tape tape-cyan"><span class="tape-label">OUR MEMORIES</span></div>
+                        <div class="vhs-tape tape-black"><span class="tape-label">HOLLOW C-09</span></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <footer class="dashboard-footer">
+            <div class="footer-stripes"></div>
+            <div class="footer-actions">
+                <button class="btn-zzz btn-small" id="btn-sound-toggle">
+                    <span class="btn-skew-content"><i class="fa-solid fa-volume-high"></i> SFX: ON</span>
+                </button>
+                <div class="copyright">RANDOM PLAY SUB-NET // MADE WITH LOVE</div>
+            </div>
+        </footer>
+    </section>
+
+    <!-- MODAL OVERLAYS FOR THE TV SCREENS -->
+
+    <!-- MODAL 1: S-RANK AGENT DOSSIER -->
+    <div class="modal-overlay hidden" id="modal-agent">
+        <div class="modal-container agent-modal">
+            <!-- Skewed header -->
+            <div class="modal-header">
+                <div class="header-tab">
+                    <span class="tab-label">S-RANK REGISTRY SYSTEM</span>
+                </div>
+                <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            
+            <div class="modal-body agent-card-layout">
+                <!-- Left: Profile Dossier Frame -->
+                <div class="agent-profile-section">
+                    <div class="agent-avatar-frame">
+                        <img src="assets/cinnamoroll_zzz.png" alt="Agent Avatar" class="agent-avatar-img">
+                        <div class="avatar-corner-tag">S-RANK</div>
+                        <div class="hologram-flicker-line"></div>
+                    </div>
+                    <div class="agent-rarity">
+                        <div class="rarity-star"><i class="fa-solid fa-star"></i></div>
+                        <div class="rarity-star"><i class="fa-solid fa-star"></i></div>
+                        <div class="rarity-star"><i class="fa-solid fa-star"></i></div>
+                        <div class="rarity-star"><i class="fa-solid fa-star"></i></div>
+                        <div class="rarity-star"><i class="fa-solid fa-star"></i></div>
+                    </div>
+                    <div class="agent-id-badge">
+                        <span class="badge-label">AGENT ID:</span>
+                        <span class="badge-value">GF-9999-Bday</span>
+                    </div>
+                </div>
+
+                <!-- Right: Stats & Bio -->
+                <div class="agent-dossier-section">
+                    <div class="agent-name-plate">
+                        <h3 class="agent-title-name" id="agent-display-name">MY SWEETHEART</h3>
+                        <div class="codename-badge">CODENAME: THE PERFECT GF</div>
+                    </div>
+
+                    <div class="hazard-divider"></div>
+
+                    <!-- Custom Stats Section -->
+                    <div class="agent-stats-grid">
+                        <div class="stat-row">
+                            <span class="stat-name">Cuteness Core Energy</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar" style="width: 100%;" data-val="100%"></div>
+                                <span class="stat-percentage">SSS+</span>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-name">Napping & Sleeping Capacity</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar" style="width: 95%;" data-val="95%"></div>
+                                <span class="stat-percentage">9999</span>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-name">Foodie Attack Power</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar" style="width: 88%;" data-val="88%"></div>
+                                <span class="stat-percentage">A+</span>
+                            </div>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-name">Patience with Boyfriend</span>
+                            <div class="stat-bar-container">
+                                <div class="stat-bar" style="width: 100%;" data-val="100%"></div>
+                                <span class="stat-percentage">EX LIMIT</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Bios/Custom Tags -->
+                    <div class="agent-bio-traits">
+                        <span class="section-subtitle">RECOMMENDED SYNERGY TEAMS</span>
+                        <div class="trait-tags">
+                            <span class="tag-chip text-primary"><i class="fa-solid fa-circle-nodes"></i> Cinnamoroll Cozy Club</span>
+                            <span class="tag-chip text-info"><i class="fa-solid fa-mug-hot"></i> Coffee & Sleep Squad</span>
+                            <span class="tag-chip text-warning"><i class="fa-solid fa-gift"></i> Birthday S-Ranker</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <div class="footer-alert-bar">
+                    <i class="fa-solid fa-circle-info text-warning"></i> ACTIVE SYNERGY DETECTED: 100% COMPATIBILITY WITH ACTIVE PROXY
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 2: SOUND ARCHIVE (Retro Cassette Deck) -->
+    <div class="modal-overlay hidden" id="modal-music">
+        <div class="modal-container music-modal">
+            <div class="modal-header">
+                <div class="header-tab">
+                    <span class="tab-label">RANDOM PLAY CASSETTE DECK</span>
+                </div>
+                <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body cassette-body">
+                <!-- Elegant cassette design -->
+                <div class="tape-deck-wrapper">
+                    <div class="cassette-tape neon-border-glow">
+                        <div class="cassette-frame-stripes"></div>
+                        <div class="tape-label-sticker">
+                            <div class="sticker-line">RANDOM PLAY SOUND DECK</div>
+                            <div class="sticker-title text-accent">PROXY B-DAY RETRO BEAT</div>
+                        </div>
+                        
+                        <div class="tape-reels">
+                            <!-- Left Reel -->
+                            <div class="tape-reel-window">
+                                <div class="spinning-reel" id="reel-left">
+                                    <div class="reel-core"></div>
+                                    <div class="reel-spokes"></div>
+                                </div>
+                            </div>
+                            <!-- Middle Window showing brown tape spooling -->
+                            <div class="tape-center-window"></div>
+                            <!-- Right Reel -->
+                            <div class="tape-reel-window">
+                                <div class="spinning-reel" id="reel-right">
+                                    <div class="reel-core"></div>
+                                    <div class="reel-spokes"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Cassette bottom features -->
+                        <div class="cassette-bottom-indent">
+                            <div class="bottom-screw"></div>
+                            <div class="bottom-holes"></div>
+                            <div class="bottom-screw"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Playback controls -->
+                <div class="playback-panel">
+                    <!-- Song Metadata -->
+                    <div class="track-metadata">
+                        <span class="track-title" id="current-track-name">RETRO SYNTH CHILL BEATS (Lofi Loop)</span>
+                        <div class="track-timer"><span id="track-time-elapsed">00:00</span> / <span id="track-total-duration">02:30</span></div>
+                    </div>
+                    
+                    <div class="progress-bar-container" id="music-progress-wrapper">
+                        <div class="progress-bar-fill" id="music-progress-fill" style="width: 0%;"></div>
+                    </div>
+
+                    <!-- Interactive Deck Keys -->
+                    <div class="deck-buttons">
+                        <button class="deck-key btn-zzz btn-small" id="deck-play" title="Play">
+                            <span class="btn-skew-content"><i class="fa-solid fa-play"></i> PLAY</span>
+                        </button>
+                        <button class="deck-key btn-zzz btn-small active-btn" id="deck-pause" title="Pause" disabled>
+                            <span class="btn-skew-content"><i class="fa-solid fa-pause"></i> PAUSE</span>
+                        </button>
+                        <button class="deck-key btn-zzz btn-small" id="deck-stop" title="Stop">
+                            <span class="btn-skew-content"><i class="fa-solid fa-stop"></i> STOP</span>
+                        </button>
+                    </div>
+
+                    <!-- Graphic Audio Equalizer bars -->
+                    <div class="equalizer-display" id="equalizer-bars">
+                        <!-- Bars dynamically scaled in JS -->
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                        <div class="eq-bar"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <div class="footer-alert-bar info-alert">
+                    <i class="fa-solid fa-music"></i> NOTE: THIS TAPE LOOPS A DYNAMIC SYNTH BIRTHDAY HYMN SPECIFICALLY DESIGNED FOR COZY LISTENING.
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 3: CO-OP MISSION TIMELINE (Photo Log) -->
+    <div class="modal-overlay hidden" id="modal-timeline">
+        <div class="modal-container timeline-modal">
+            <div class="modal-header">
+                <div class="header-tab">
+                    <span class="tab-label">CO-OP ARCHIVE LOGS</span>
+                </div>
+                <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body timeline-body scrollable">
+                <div class="timeline-header-block">
+                    <h3 class="title-skew text-success">OUR MISSION TIMELINE</h3>
+                    <p class="timeline-desc">Chronological synchronization of our favorite adventures, snack co-ops, and cozy moments!</p>
+                </div>
+
+                <!-- Custom Vertical Timeline in Comic/Street styling -->
+                <div class="vertical-timeline">
+                    <!-- Timeline Line -->
+                    <div class="timeline-thread"></div>
+
+                    <!-- Entry 1 -->
+                    <div class="timeline-entry left-entry">
+                        <div class="entry-pointer"></div>
+                        <div class="entry-content">
+                            <div class="entry-tag text-success">STAGE 01 // FIRST ENCOUNTER</div>
+                            <h4 class="entry-title">Signal Locked</h4>
+                            <p class="entry-text">The moment our waves aligned and we started exploring life's Hollows together. The sweetest signal overload.</p>
+                            <!-- Decorative vector drawing or border placeholder -->
+                            <div class="timeline-photo-placeholder">
+                                <i class="fa-solid fa-heart text-warning pulsing-slow"></i>
+                                <span>[ LOCK SIGNAL: FIRST CO-OP ]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Entry 2 -->
+                    <div class="timeline-entry right-entry">
+                        <div class="entry-pointer"></div>
+                        <div class="entry-content">
+                            <div class="entry-tag text-info">STAGE 02 // FOOD CO-OP</div>
+                            <h4 class="entry-title">Sweet Attack!</h4>
+                            <p class="entry-text">Shared dinners, custom drinks, and all the sugary treats we raided in the safe zones. High food energy multipliers!</p>
+                            <div class="timeline-photo-placeholder">
+                                <i class="fa-solid fa-utensils text-info"></i>
+                                <span>[ MEMORY CHIP: FOOD MISSIONS ]</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Entry 3 -->
+                    <div class="timeline-entry left-entry">
+                        <div class="entry-pointer"></div>
+                        <div class="entry-content">
+                            <div class="entry-tag text-primary">STAGE 03 // COZY NIGHTS</div>
+                            <h4 class="entry-title">Napping Protocol</h4>
+                            <p class="entry-text">Cuddling on the couch, catching up on shows, and taking the absolute highest S-rank afternoon naps together.</p>
+                            <div class="timeline-photo-placeholder">
+                                <i class="fa-solid fa-moon text-primary"></i>
+                                <span>[ CHIP SET: COZY SYNC ]</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <div class="footer-alert-bar">
+                    <i class="fa-solid fa-plus-circle text-success"></i> COMPILING NEW CO-OP MEMORY PROTOCOLS EVERY DAY...
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL 4: BIRTHDAY PROTOCOL (The Secret Letter) -->
+    <div class="modal-overlay hidden" id="modal-letter">
+        <div class="modal-container letter-modal">
+            <div class="modal-header">
+                <div class="header-tab warning-tab">
+                    <span class="tab-label text-warning"><i class="fa-solid fa-triangle-exclamation"></i> URGENT: BIRTHDAY DECRYPT</span>
+                </div>
+                <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
+            </div>
+
+            <div class="modal-body letter-body scrollable">
+                <!-- Cinnamoroll holographic popup image -->
+                <div class="bday-gift-box">
+                    <div class="mascot-holo-ring">
+                        <img src="assets/cinnamoroll_zzz.png" alt="Happy Birthday Cinnamoroll" class="bday-celebrant-img">
+                        <div class="holo-glitch"></div>
+                    </div>
+                    <div class="neon-badge-alert text-warning-glow">S-RANK ENVELOPE OPENED</div>
+                </div>
+
+                <!-- Decrypted Love Letter Container -->
+                <div class="declassified-letter">
+                    <div class="letter-stamp-stripes"></div>
+                    <h3 class="letter-greeting">DEAR <span id="letter-proxy-name" class="text-warning font-heavy">PROXY</span>,</h3>
+                    
+                    <div class="letter-paragraph" id="letter-typing-area">
+                        <!-- Content will type out dynamically using JS for an authentic digital report look -->
+                    </div>
+
+                    <div class="letter-signature-block">
+                        <span class="signature-tag">S-RANK PARTNER PROXY</span>
+                        <div class="signature-line"></div>
+                        <span class="signature-label">AUTH CODE: 5201314-ALWAYS</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn-zzz btn-neon" id="btn-confetti">
+                    <span class="btn-skew-content"><i class="fa-solid fa-wand-magic-sparkles"></i> TRIGGER DUST CONFETTI</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- MAIN APP SCRIPT -->
+    <script src="app.js"></script>
+</body>
+</html>
