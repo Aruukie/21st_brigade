@@ -1486,10 +1486,70 @@ body.proxy-initialized .crt-overlay {
     gap: 15px;
 }
 
+.playlist-selector {
+    display: grid;
+    grid-template-columns: 38px minmax(0, 1fr) 38px;
+    gap: 8px;
+    align-items: stretch;
+}
+
+.playlist-options {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 8px;
+}
+
+.playlist-cycle,
+.playlist-option {
+    background-color: var(--color-bg-darkest);
+    color: var(--color-white);
+    border: 2px solid var(--border-color);
+    border-radius: 6px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    cursor: pointer;
+    box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.45);
+}
+
+.playlist-cycle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.playlist-option {
+    min-height: 44px;
+    padding: 6px 8px;
+    text-align: left;
+}
+
+.playlist-option-name {
+    display: block;
+    font-size: 0.68rem;
+    line-height: 1.1;
+}
+
+.playlist-option-code {
+    display: block;
+    margin-top: 3px;
+    color: #888899;
+    font-size: 0.55rem;
+}
+
+.playlist-option.active-playlist {
+    background-color: var(--color-primary);
+    color: var(--color-bg-darkest);
+}
+
+.playlist-option.active-playlist .playlist-option-code {
+    color: var(--color-bg-darkest);
+}
+
 .track-metadata {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 12px;
     font-family: var(--font-mono);
     font-size: 0.8rem;
 }
@@ -1497,6 +1557,11 @@ body.proxy-initialized .crt-overlay {
 .track-title {
     font-weight: 700;
     color: var(--color-primary);
+    min-width: 0;
+}
+
+.track-timer {
+    flex-shrink: 0;
 }
 
 .progress-bar-container {
@@ -2032,6 +2097,23 @@ body.proxy-initialized .crt-overlay {
     .cassette-bottom-indent {
         height: 20px;
     }
+    .playlist-selector {
+        grid-template-columns: 32px minmax(0, 1fr) 32px;
+        gap: 6px;
+    }
+    .playlist-options {
+        gap: 5px;
+    }
+    .playlist-option {
+        min-height: 38px;
+        padding: 4px;
+    }
+    .playlist-option-name {
+        font-size: 0.52rem;
+    }
+    .playlist-option-code {
+        font-size: 0.48rem;
+    }
     .deck-buttons {
         gap: 6px;
     }
@@ -2042,6 +2124,10 @@ body.proxy-initialized .crt-overlay {
     }
     .track-title {
         font-size: 0.68rem;
+    }
+    .track-metadata {
+        gap: 8px;
+        align-items: flex-start;
     }
     .equalizer-display {
         height: 30px;

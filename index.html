@@ -321,7 +321,7 @@
                         <div class="cassette-frame-stripes"></div>
                         <div class="tape-label-sticker">
                             <div class="sticker-line">RANDOM PLAY SOUND DECK</div>
-                            <div class="sticker-title text-accent">PROXY B-DAY RETRO BEAT</div>
+                            <div class="sticker-title text-accent" id="cassette-playlist-title">PROXY B-DAY RETRO BEAT</div>
                         </div>
                         
                         <div class="tape-reels">
@@ -354,6 +354,16 @@
 
                 <!-- Playback controls -->
                 <div class="playback-panel">
+                    <div class="playlist-selector" aria-label="Sound archive playlists">
+                        <button class="playlist-cycle" id="playlist-prev" title="Previous playlist">
+                            <i class="fa-solid fa-chevron-left"></i>
+                        </button>
+                        <div class="playlist-options" id="playlist-options"></div>
+                        <button class="playlist-cycle" id="playlist-next" title="Next playlist">
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+
                     <!-- Song Metadata -->
                     <div class="track-metadata">
                         <span class="track-title" id="current-track-name">RETRO SYNTH CHILL BEATS (Lofi Loop)</span>

@@ -122,13 +122,11 @@ document.addEventListener("DOMContentLoaded", () => {
         } catch(e) {}
     }
 
-    // DYNAMIC RETRO MUSIC SYNTHESIZER (Playing a sweet Happy Birthday Lofi Chord loop)
-    // We compose a beautiful custom music sequence: cozy lofi chord changes with a gentle bell melody!
-    const lofiTempo = 95; // BPM
-    const beatDuration = 60 / lofiTempo; // duration of one beat in seconds
+    // DYNAMIC RETRO MUSIC SYNTHESIZER
+    // Each Sound Archive playlist uses the same cassette deck, but swaps synth patterns.
 
     // Happy Birthday progression in F major: F -> C -> C -> F -> F7 -> Bb -> F -> C -> F
-    const chords = [
+    const birthdayChords = [
         [174.61, 220.00, 261.63, 349.23], // F Major (F3, A3, C4, F4)
         [174.61, 220.00, 261.63, 349.23], 
         [130.81, 196.00, 261.63, 329.63], // C Major (C3, G3, C4, E4)
@@ -149,7 +147,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Melodic notes sequence mapping standard "Happy Birthday to you"
     // Format: [Frequency, beatOffset, durationMultiplier]
-    const melody = [
+    const birthdayMelody = [
         [349.23, 0, 0.75], // F4 ("Hap-")
         [349.23, 0.75, 0.25], // F4 ("-py")
         [392.00, 1.0, 1.0],  // G4 ("Birth-")
@@ -180,12 +178,78 @@ document.addEventListener("DOMContentLoaded", () => {
         [349.23, 22.0, 2.0]   // F4 ("you")
     ];
 
+    const soundArchivePlaylists = [
+        {
+            title: "RETRO SYNTH CHILL BEATS (Lofi Loop)",
+            cassetteTitle: "PROXY B-DAY RETRO BEAT",
+            code: "TAPE A",
+            tempo: 95,
+            duration: 150,
+            loopBeats: 32,
+            padWave: "triangle",
+            leadWave: "sine",
+            filterStart: 500,
+            filterEnd: 250,
+            chords: birthdayChords,
+            melody: birthdayMelody
+        },
+        {
+            title: "CINNAMON CLOUD DRIVE (Dream Pop)",
+            cassetteTitle: "CINNAMON CLOUD DRIVE",
+            code: "TAPE B",
+            tempo: 82,
+            duration: 180,
+            loopBeats: 16,
+            padWave: "sine",
+            leadWave: "triangle",
+            filterStart: 720,
+            filterEnd: 320,
+            chords: [
+                [146.83, 220.00, 293.66, 369.99],
+                [164.81, 246.94, 329.63, 415.30],
+                [130.81, 196.00, 261.63, 392.00],
+                [174.61, 261.63, 349.23, 440.00]
+            ],
+            melody: [
+                [587.33, 0, 1], [659.25, 2, 1], [739.99, 4, 1.5], [659.25, 7, 1],
+                [523.25, 8, 1], [587.33, 10, 1], [659.25, 12, 2], [493.88, 15, 1]
+            ]
+        },
+        {
+            title: "HOLLOW NIGHT PARADE (Arcade Pulse)",
+            cassetteTitle: "HOLLOW NIGHT PARADE",
+            code: "TAPE C",
+            tempo: 118,
+            duration: 135,
+            loopBeats: 16,
+            padWave: "sawtooth",
+            leadWave: "square",
+            filterStart: 640,
+            filterEnd: 420,
+            chords: [
+                [110.00, 164.81, 220.00, 329.63],
+                [98.00, 146.83, 196.00, 293.66],
+                [130.81, 196.00, 261.63, 392.00],
+                [123.47, 185.00, 246.94, 369.99]
+            ],
+            melody: [
+                [440.00, 0, 0.5], [523.25, 1, 0.5], [659.25, 2, 0.5], [523.25, 3, 0.5],
+                [392.00, 4, 0.5], [493.88, 5, 0.5], [587.33, 6, 0.5], [493.88, 7, 0.5],
+                [329.63, 8, 1], [392.00, 10, 1], [493.88, 12, 1], [659.25, 14, 1]
+            ]
+        }
+    ];
+
+    let activePlaylistIndex = 0;
+    let activePlaylist = soundArchivePlaylists[activePlaylistIndex];
+    let beatDuration = 60 / activePlaylist.tempo;
+
     function playMusicTick() {
         if (!isMusicPlaying) return;
         initAudio();
         
-        const currentChordIndex = Math.floor(currentBeat / 2) % chords.length;
-        const currentChord = chords[currentChordIndex];
+        const currentChordIndex = Math.floor(currentBeat / 2) % activePlaylist.chords.length;
+        const currentChord = activePlaylist.chords[currentChordIndex];
         
         // 1. Play Soft Pad Chords (Warm Low-Pass Triangles)
         if (currentBeat % 2 === 0) {
@@ -198,12 +262,12 @@ document.addEventListener("DOMContentLoaded", () => {
                 filter.connect(gain);
                 gain.connect(audioCtx.destination);
                 
-                osc.type = "triangle";
+                osc.type = activePlaylist.padWave;
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
                 
                 filter.type = "lowpass";
-                filter.frequency.setValueAtTime(500, audioCtx.currentTime);
-                filter.frequency.exponentialRampToValueAtTime(250, audioCtx.currentTime + beatDuration * 1.8);
+                filter.frequency.setValueAtTime(activePlaylist.filterStart, audioCtx.currentTime);
+                filter.frequency.exponentialRampToValueAtTime(activePlaylist.filterEnd, audioCtx.currentTime + beatDuration * 1.8);
                 
                 gain.gain.setValueAtTime(0, audioCtx.currentTime);
                 gain.gain.linearRampToValueAtTime(0.04, audioCtx.currentTime + 0.1);
@@ -216,8 +280,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // 2. Play Cozy Lofi Bell Melody
         // Search if there's a note at this beat offset
-        const loopBeat = currentBeat % 32; // Loop melody every 32 beats (approx 20 secs)
-        const melodyNote = melody.find(n => Math.abs(n[1] - loopBeat) < 0.05);
+        const loopBeat = currentBeat % activePlaylist.loopBeats;
+        const melodyNote = activePlaylist.melody.find(n => Math.abs(n[1] - loopBeat) < 0.05);
         if (melodyNote) {
             const freq = melodyNote[0];
             const duration = melodyNote[2] * beatDuration;
@@ -228,7 +292,7 @@ document.addEventListener("DOMContentLoaded", () => {
             osc.connect(gain);
             gain.connect(audioCtx.destination);
             
-            osc.type = "sine"; // Pure bell tone
+            osc.type = activePlaylist.leadWave;
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
             
             gain.gain.setValueAtTime(0, audioCtx.currentTime);
@@ -247,6 +311,66 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Increment beat count
         currentBeat++;
+    }
+
+    function formatTime(totalSeconds) {
+        const m = Math.floor(totalSeconds / 60).toString().padStart(2, '0');
+        const s = Math.floor(totalSeconds % 60).toString().padStart(2, '0');
+        return `${m}:${s}`;
+    }
+
+    function renderPlaylistOptions() {
+        const optionsContainer = document.getElementById("playlist-options");
+        optionsContainer.innerHTML = "";
+
+        soundArchivePlaylists.forEach((playlist, index) => {
+            const button = document.createElement("button");
+            button.className = "playlist-option";
+            button.type = "button";
+            button.dataset.playlistIndex = index;
+            button.innerHTML = `
+                <span class="playlist-option-name">${playlist.cassetteTitle}</span>
+                <span class="playlist-option-code">${playlist.code}</span>
+            `;
+            button.addEventListener("click", () => selectPlaylist(index));
+            optionsContainer.appendChild(button);
+        });
+    }
+
+    function updatePlaylistDisplay() {
+        document.getElementById("current-track-name").textContent = activePlaylist.title;
+        document.getElementById("cassette-playlist-title").textContent = activePlaylist.cassetteTitle;
+        document.getElementById("track-total-duration").textContent = formatTime(activePlaylist.duration);
+
+        document.querySelectorAll(".playlist-option").forEach((button, index) => {
+            button.classList.toggle("active-playlist", index === activePlaylistIndex);
+        });
+    }
+
+    function selectPlaylist(nextIndex) {
+        const playlistCount = soundArchivePlaylists.length;
+        const normalizedIndex = (nextIndex + playlistCount) % playlistCount;
+        if (normalizedIndex === activePlaylistIndex) return;
+
+        const wasPlaying = isMusicPlaying;
+        if (wasPlaying) {
+            toggleMusicPlayback(false);
+        }
+
+        activePlaylistIndex = normalizedIndex;
+        activePlaylist = soundArchivePlaylists[activePlaylistIndex];
+        beatDuration = 60 / activePlaylist.tempo;
+        currentBeat = 0;
+        elapsedSeconds = 0;
+
+        document.getElementById("track-time-elapsed").textContent = "00:00";
+        document.getElementById("music-progress-fill").style.width = "0%";
+        updatePlaylistDisplay();
+        playClickSound();
+
+        if (wasPlaying) {
+            toggleMusicPlayback(true);
+        }
     }
 
     // Dynamic scale equalizer bars based on beat
@@ -301,19 +425,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Increment simulated tape time elapsed
     let elapsedSeconds = 0;
-    const totalDurationSeconds = 150; // 02:30
     
     function updateMusicProgress() {
         if (!isMusicPlaying) return;
-        elapsedSeconds = (elapsedSeconds + beatDuration) % totalDurationSeconds;
+        elapsedSeconds = (elapsedSeconds + beatDuration) % activePlaylist.duration;
         
         // Update numeric counter display
-        const m = Math.floor(elapsedSeconds / 60).toString().padStart(2, '0');
-        const s = Math.floor(elapsedSeconds % 60).toString().padStart(2, '0');
-        document.getElementById("track-time-elapsed").textContent = `${m}:${s}`;
+        document.getElementById("track-time-elapsed").textContent = formatTime(elapsedSeconds);
         
         // Progress bar filling
-        const percent = (elapsedSeconds / totalDurationSeconds) * 100;
+        const percent = (elapsedSeconds / activePlaylist.duration) * 100;
         document.getElementById("music-progress-fill").style.width = `${percent}%`;
     }
 
@@ -562,6 +683,10 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("deck-play").addEventListener("click", () => toggleMusicPlayback(true));
     document.getElementById("deck-pause").addEventListener("click", () => toggleMusicPlayback(false));
     document.getElementById("deck-stop").addEventListener("click", resetTape);
+    document.getElementById("playlist-prev").addEventListener("click", () => selectPlaylist(activePlaylistIndex - 1));
+    document.getElementById("playlist-next").addEventListener("click", () => selectPlaylist(activePlaylistIndex + 1));
+    renderPlaylistOptions();
+    updatePlaylistDisplay();
 
     // ==========================================================================
     // BIRTHDAY LETTER DECRYPTION TYPEWRITER
