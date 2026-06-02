@@ -377,6 +377,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Submit Authorization Button Trigger
     loginBtn.addEventListener("click", () => {
+        document.body.classList.add("proxy-initialized");
+
         // Fallback default name if empty to bypass iOS typing keyboard completely
         proxyName = authInput.value.trim() || "Sweetheart";
         

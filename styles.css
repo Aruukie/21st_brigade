@@ -92,6 +92,10 @@ body {
     opacity: 0.85;
 }
 
+body.proxy-initialized .crt-overlay {
+    display: none;
+}
+
 .crt-overlay::after {
     content: " ";
     display: block;
