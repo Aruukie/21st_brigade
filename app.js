@@ -394,6 +394,11 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("boot-screen").classList.add("hidden");
             document.getElementById("main-dashboard").classList.remove("hidden");
             
+            // Completely disable display of boot-screen after transition completes (prevents scrolling back up)
+            setTimeout(() => {
+                document.getElementById("boot-screen").style.display = "none";
+            }, 800);
+            
             // Auto start lo-fi ambient beats once dashboard opens to maximize cozy vibe
             setTimeout(() => {
                 toggleMusicPlayback(true);
