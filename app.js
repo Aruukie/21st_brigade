@@ -90,6 +90,68 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // UI SOUND EFFECTS (Web Audio API)
     // The Sound Archive itself plays real audio files through the cassette deck.
+    function scrollActiveCardIntoView() {
+    const track = document.getElementById("episode-carousel-track");
+    if (!track) return;
+        const activeCard = track.children[activeMemoryIndex];
+    if (activeCard) {
+        activeCard.scrollIntoView({
+            behavior: "smooth",
+            block: "nearest",
+            inline: "center"
+        });
+    }
+}/**
+ * Monitors iOS scroll gestures to auto-update memory views when users swipe instead of tapping
+ */
+function setupMobileSwipeDetection() {
+    const container = document.getElementById("episode-carousel-container");
+    const track = document.getElementById("episode-carousel-track");
+    if (!container || !track) return;
+
+    let scrollTimeout;
+    container.addEventListener("scroll", () => {
+        // Debounce events slightly to optimize performance on mobile webviews
+        window.clearTimeout(scrollTimeout);
+        
+        scrollTimeout = setTimeout(() => {
+            const cards = Array.from(track.children);
+            if (!cards.length) return;
+
+            // Figure out which card is physically closest to the left viewport edge of the container
+            const containerLeft = container.getBoundingClientRect().left;
+            let targetIndex = 0;
+            let closestDistance = Infinity;
+
+            cards.forEach((card, index) => {
+                const distance = Math.abs(card.getBoundingClientRect().left - containerLeft);
+                if (distance < closestDistance) {
+                    closestDistance = distance;
+                    targetIndex = index;
+                }
+            });
+
+            // If a new item alignment is locked by the gesture, sync the active display
+            if (targetIndex !== activeMemoryIndex) {
+                activeMemoryIndex = targetIndex;
+                
+                // If you have a primary renderer function (e.g., updateActiveMemoryDisplay) trigger it here:
+                if (typeof updateActiveMemoryDisplay === "function") {
+                    updateActiveMemoryDisplay();
+                } else {
+                    // Manual CSS state management fallback
+                    cards.forEach((c, idx) => {
+                        c.classList.toggle("active-card", idx === activeMemoryIndex);
+                    });
+                }
+            }
+        }, 50); // Fast 50ms processing feedback
+    });
+}
+
+// Ensure you kick off swipe detection inside your main app initialization routine:
+setupMobileSwipeDetection();
+    
     let audioCtx = null;
 
     function initAudio() {
