@@ -15,10 +15,10 @@ document.addEventListener("DOMContentLoaded", () => {
         {
             stage: "STAGE 01",
             title: "Signal Locked",
-            tag: "FIRST CO-OP",
+            tag: "FOREVER CO-OP",
             sync: "100%",
             img: "assets/Us together 1.jpg",
-            desc: "The moment our waves aligned and we started exploring life's Hollows together. The sweetest signal overload."
+            desc: "Exploring life's Hollows together. The sweetest signal overload."
         },
         {
             stage: "STAGE 02",
@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tag: "COFFEE SYNC",
             sync: "98%",
             img: "assets/Mirror cafe 129.jpg",
-            desc: "Syncing up at our favorite mirror cafe. Double shot of sweetness and caffeine to power through the day's missions."
+            desc: "Enjoying and exploring coffee, flavors and cafes together."
         },
         {
             stage: "STAGE 03",
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
             tag: "CONCERT BEATS",
             sync: "99%",
             img: "assets/Concert.jpg",
-            desc: "Feeling the bass vibrate through our chests at the live concert. Singing along under the flashing neon lights."
+            desc: "Feeling the bass vibrate through our chests at the live concert."
         },
         {
             stage: "STAGE 09",
