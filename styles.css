@@ -2885,7 +2885,115 @@ body.proxy-initialized .crt-overlay {
         font-size: 0.78rem;
         line-height: 1.5;
         min-height: 100px;
+    
     }
+    .coop-split-layout {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 12px !important;
+    }
+
+    /* 2. Compact Detail Panel: Convert to horizontal row to preserve vertical screen space */
+    .episode-detail-panel {
+        display: flex !important;
+        flex-direction: row !important;
+        align-items: center !important;
+        gap: 12px !important;
+        padding: 10px !important;
+        background: var(--color-bg-dark);
+        border: 2px solid var(--border-color, #000);
+        border-radius: var(--border-radius, 8px);
+    }
+
+    /* Constrain the active image thumbnail so text has room to breathe */
+    .episode-preview-frame {
+        width: 100px !important;
+        height: 100px !important;
+        flex-shrink: 0 !important;
+        margin: 0 !important;
+        border-width: 2px !important;
+    }
+
+    .episode-detail-info {
+        flex: 1 !important;
+        display: flex !important;
+        flex-direction: column !important;
+        justify-content: center !important;
+        text-align: left !important;
+    }
+
+    .episode-meta-header {
+        margin-bottom: 2px !important;
+    }
+
+    .episode-detail-title {
+        font-size: 1.1rem !important;
+        margin-bottom: 4px !important;
+    }
+
+    .episode-detail-desc {
+        font-size: 0.75rem !important;
+        line-height: 1.3 !important;
+        margin-bottom: 4px !important;
+        display: -webkit-box;
+        -webkit-line-clamp: 2; /* Lock to 2 text rows max to protect the viewport */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .episode-actions {
+        margin-top: 2px !important;
+        text-align: left !important;
+    }
+
+    .episode-actions .btn-zzz {
+        padding: 4px 10px !important;
+        font-size: 0.75rem !important;
+    }
+
+    /* 3. Carousel Area: Enable frictionless thumb-scrolling and layout tracking */
+    .episode-carousel-panel {
+        margin-top: 4px !important;
+    }
+
+    .episode-carousel-container {
+        padding: 6px 4px !important;
+        overflow-x: auto !important; /* Enable side scrolling */
+        overflow-y: hidden !important;
+        -webkit-overflow-scrolling: touch; /* Butter-smooth iOS inertia scrolling */
+        scroll-snap-type: x mandatory; /* Force cards to click into place elegantly */
+    }
+
+    .episode-carousel-track {
+        display: flex !important;
+        gap: 10px !important;
+        width: max-content !important; /* Prevent collapsing inside the container */
+    }
+
+    /* 4. Touch-Friendly Cards with Snap Support */
+    .episode-card {
+        flex: 0 0 135px !important; /* Set standard swipe-width profiles */
+        height: 155px !important;
+        scroll-snap-align: start; /* Target position for snap locking */
+        margin: 0 !important;
+        box-shadow: 4px 4px 0px #000 !important;
+    }
+
+    .episode-card-img-wrapper {
+        height: 85px !important;
+    }
+
+    .episode-card-title {
+        font-size: 0.75rem !important;
+        padding: 4px !important;
+    }
+
+    .episode-card-index {
+        font-size: 1.8rem !important;
+        bottom: -8px !important;
+        right: -2px !important;
+    }
+}
 }
 
 /* ==========================================================================
