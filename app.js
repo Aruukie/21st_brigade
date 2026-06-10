@@ -10,10 +10,88 @@ document.addEventListener("DOMContentLoaded", () => {
     let isMusicPlaying = false;
     let letterTyped = false;
 
+    // CO-OP MEMORIES DATA
+    const coopMemories = [
+        {
+            stage: "STAGE 01",
+            title: "Signal Locked",
+            tag: "FIRST CO-OP",
+            sync: "100%",
+            img: "assets/Us together 1.jpg",
+            desc: "The moment our waves aligned and we started exploring life's Hollows together. The sweetest signal overload."
+        },
+        {
+            stage: "STAGE 02",
+            title: "Cafe Rendezvous",
+            tag: "COFFEE SYNC",
+            sync: "98%",
+            img: "assets/Mirror cafe 129.jpg",
+            desc: "Syncing up at our favorite mirror cafe. Double shot of sweetness and caffeine to power through the day's missions."
+        },
+        {
+            stage: "STAGE 03",
+            title: "Reflected Joy",
+            tag: "RIDE TOGETHER",
+            sync: "99%",
+            img: "assets/mirror ride.jpg",
+            desc: "Catching reflections of smiles on the go. Traveling through the city with you is the best part of the adventure."
+        },
+        {
+            stage: "STAGE 04",
+            title: "Riders of the Hollow",
+            tag: "SPEED ATTACK",
+            sync: "95%",
+            img: "assets/Riders tpgetjer 1.jpg",
+            desc: "Cruising together side-by-side. Wind in our hair, music playing, and an unstoppable S-rank path ahead."
+        },
+        {
+            stage: "STAGE 05",
+            title: "Food Co-op",
+            tag: "SNACK MISSION",
+            sync: "97%",
+            img: "assets/Hotdog.jpg",
+            desc: "Shared dinners, custom drinks, and all the quick bites we raided in the safe zones. High food energy multipliers!"
+        },
+        {
+            stage: "STAGE 06",
+            title: "Cozy Hideout",
+            tag: "NAPPING PROTOCOL",
+            sync: "100%",
+            img: "assets/Fink.jpg",
+            desc: "Cuddling on the couch, catching up on shows, and taking the absolute highest S-rank afternoon naps together."
+        },
+        {
+            stage: "STAGE 07",
+            title: "Gliding Sync",
+            tag: "ICE SKATING",
+            sync: "96%",
+            img: "assets/Ice skating.jpg",
+            desc: "Holding hands on the ice rink. Sliding and laughing through the cold, warmed up by our high compatibility rate."
+        },
+        {
+            stage: "STAGE 08",
+            title: "Neon Rhythms",
+            tag: "CONCERT BEATS",
+            sync: "99%",
+            img: "assets/Concert.jpg",
+            desc: "Feeling the bass vibrate through our chests at the live concert. Singing along under the flashing neon lights."
+        },
+        {
+            stage: "STAGE 09",
+            title: "Infinite Adventure",
+            tag: "ALWAYS SYNCED",
+            sync: "EX Limit",
+            img: "assets/image.jpg",
+            desc: "A special snapshot of our infinite journey. Compiling new co-op memory protocols every single day."
+        }
+    ];
+
+    let activeMemoryIndex = 0;
+
     // UI SOUND EFFECTS (Web Audio API)
     // The Sound Archive itself plays real audio files through the cassette deck.
     let audioCtx = null;
-    
+
     function initAudio() {
         if (!audioCtx) {
             audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -30,17 +108,17 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            
+
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            
+
             osc.type = "sine";
             osc.frequency.setValueAtTime(880, audioCtx.currentTime); // A5
             osc.frequency.exponentialRampToValueAtTime(1760, audioCtx.currentTime + 0.08); // A6
-            
+
             gain.gain.setValueAtTime(0.08, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.1);
-            
+
             osc.start();
             osc.stop(audioCtx.currentTime + 0.1);
         } catch (e) { console.log(e); }
@@ -54,20 +132,20 @@ document.addEventListener("DOMContentLoaded", () => {
             const oscNode = audioCtx.createOscillator();
             const noiseNode = audioCtx.createGain(); // custom damp filter
             const gainNode = audioCtx.createGain();
-            
+
             oscNode.connect(gainNode);
             gainNode.connect(audioCtx.destination);
-            
+
             oscNode.type = "triangle";
             oscNode.frequency.setValueAtTime(120, audioCtx.currentTime);
             oscNode.frequency.exponentialRampToValueAtTime(40, audioCtx.currentTime + 0.12);
-            
+
             gainNode.gain.setValueAtTime(0.2, audioCtx.currentTime);
             gainNode.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
-            
+
             oscNode.start();
             oscNode.stop(audioCtx.currentTime + 0.15);
-        } catch(e) {}
+        } catch (e) { }
     }
 
     // Synthesize Success / Level Up Jingle on boot
@@ -79,21 +157,21 @@ document.addEventListener("DOMContentLoaded", () => {
             notes.forEach((freq, index) => {
                 const osc = audioCtx.createOscillator();
                 const gain = audioCtx.createGain();
-                
+
                 osc.connect(gain);
                 gain.connect(audioCtx.destination);
-                
+
                 osc.type = "triangle";
                 osc.frequency.setValueAtTime(freq, audioCtx.currentTime + index * 0.08);
-                
+
                 gain.gain.setValueAtTime(0.0, audioCtx.currentTime);
                 gain.gain.linearRampToValueAtTime(0.06, audioCtx.currentTime + index * 0.08 + 0.02);
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + index * 0.08 + 0.25);
-                
+
                 osc.start(audioCtx.currentTime + index * 0.08);
                 osc.stop(audioCtx.currentTime + index * 0.08 + 0.3);
             });
-        } catch (e) {}
+        } catch (e) { }
     }
 
     // Synthesize a retro typewriting click
@@ -103,21 +181,21 @@ document.addEventListener("DOMContentLoaded", () => {
         try {
             const osc = audioCtx.createOscillator();
             const gain = audioCtx.createGain();
-            
+
             osc.connect(gain);
             gain.connect(audioCtx.destination);
-            
+
             osc.type = "sine";
             // Randomize slightly for realistic typewriter variation
             const freq = 1200 + Math.random() * 400;
             osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
-            
+
             gain.gain.setValueAtTime(0.015, audioCtx.currentTime);
             gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + 0.03);
-            
+
             osc.start();
             osc.stop(audioCtx.currentTime + 0.03);
-        } catch(e) {}
+        } catch (e) { }
     }
 
     // SOUND ARCHIVE SONGS
@@ -319,10 +397,10 @@ document.addEventListener("DOMContentLoaded", () => {
     function updateMusicProgress() {
         const duration = Number.isFinite(cassetteAudio.duration) ? cassetteAudio.duration : activePlaylist.duration;
         const elapsedSeconds = cassetteAudio.currentTime || 0;
-        
+
         // Update numeric counter display
         document.getElementById("track-time-elapsed").textContent = formatTime(elapsedSeconds);
-        
+
         // Progress bar filling
         const percent = duration > 0 ? (elapsedSeconds / duration) * 100 : 0;
         document.getElementById("music-progress-fill").style.width = `${percent}%`;
@@ -342,7 +420,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // PHASE 1: RETRO CRT BOOT SCREEN LOGIC
     // ==========================================================================
-    
+
     const logs = [
         "> SECURE_PROTOCOL: ENABLED",
         "> SYNCHRONIZING DEEP HOLLOW SIGNALS... [100%]",
@@ -361,10 +439,10 @@ document.addEventListener("DOMContentLoaded", () => {
             p.textContent = logs[logIndex];
             logBox.appendChild(p);
             logBox.scrollTop = logBox.scrollHeight;
-            
+
             // Random mechanical click noise for logs
             playTypewriterClick();
-            
+
             logIndex++;
             setTimeout(typeLogLines, 500 + Math.random() * 300);
         } else {
@@ -396,12 +474,12 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Fallback default name if empty to bypass iOS typing keyboard completely
         proxyName = authInput.value.trim() || "Sweetheart";
-        
+
         // Lock body and scroll viewport to exactly 0 to defeat iOS virtual keyboard displacement
         window.scrollTo(0, 0);
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
-        
+
         // Force overflow hidden on HTML and Body
         document.documentElement.style.overflow = "hidden";
         document.body.style.overflow = "hidden";
@@ -411,7 +489,7 @@ document.addEventListener("DOMContentLoaded", () => {
         document.documentElement.style.height = "100%";
         document.body.style.width = "100%";
         document.body.style.height = "100%";
-        
+
         // Update user's name across the entire site
         document.getElementById("display-proxy-name").textContent = proxyName.toUpperCase();
         document.getElementById("agent-display-name").textContent = proxyName.toUpperCase();
@@ -424,11 +502,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
         setTimeout(() => {
             glitchOverlay.classList.remove("active");
-            
+
             // Slide Boot Screen out and slide in the Random Play store counter
             document.getElementById("boot-screen").classList.add("hidden");
             document.getElementById("main-dashboard").classList.remove("hidden");
-            
+
             // Completely disable display of boot-screen after transition completes (prevents scrolling back up)
             setTimeout(() => {
                 const bootElement = document.getElementById("boot-screen");
@@ -445,7 +523,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 document.documentElement.scrollTop = 0;
                 document.body.scroll(0, 0);
             }, 800);
-            
+
         }, 600);
     });
 
@@ -459,7 +537,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // MAIN DESK & TV WALL MONITOR LOGIC
     // ==========================================================================
-    
+
     // SFX Mute/Unmute Toggle
     const soundToggle = document.getElementById("btn-sound-toggle");
     soundToggle.addEventListener("click", () => {
@@ -487,7 +565,7 @@ document.addEventListener("DOMContentLoaded", () => {
     function triggerMascotDialogue() {
         const randomIndex = Math.floor(Math.random() * cinnamorollLines.length);
         mascotBubble.textContent = cinnamorollLines[randomIndex];
-        
+
         // Synthesize cute electronic squeak chirp
         if (isSoundOn) {
             initAudio();
@@ -503,7 +581,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.15);
                 osc.start();
                 osc.stop(audioCtx.currentTime + 0.15);
-            } catch(e) {}
+            } catch (e) { }
         }
     }
 
@@ -516,24 +594,28 @@ document.addEventListener("DOMContentLoaded", () => {
         monitor.addEventListener("click", () => {
             const targetModalId = monitor.getAttribute("data-target");
             const modal = document.getElementById(targetModalId);
-            
+
             playTapeLatchSound();
-            
+
             // Screen static flicker aberration trigger
             const glitchOverlay = document.getElementById("glitch-overlay");
             glitchOverlay.classList.add("active");
-            
+
             setTimeout(() => {
                 glitchOverlay.classList.remove("active");
                 modal.classList.remove("hidden");
-                
+
                 // Specific animations depending on which modal is loaded
                 if (targetModalId === "modal-agent") {
                     modal.classList.add("active-stat");
                 }
-                
+
                 if (targetModalId === "modal-letter") {
                     startLetterTypewriter();
+                }
+
+                if (targetModalId === "modal-timeline") {
+                    scrollActiveCardIntoView();
                 }
             }, 150);
         });
@@ -569,7 +651,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // TAPE CASSETTE CONTROLS BINDINGS
     // ==========================================================================
-    
+
     document.getElementById("deck-play").addEventListener("click", () => toggleMusicPlayback(true));
     document.getElementById("deck-pause").addEventListener("click", () => toggleMusicPlayback(false));
     document.getElementById("deck-stop").addEventListener("click", resetTape);
@@ -592,7 +674,7 @@ document.addEventListener("DOMContentLoaded", () => {
     // ==========================================================================
     // BIRTHDAY LETTER DECRYPTION TYPEWRITER
     // ==========================================================================
-    
+
     const letterText = `Happy Birthday to the most amazing S-Rank Sensation in my entire universe! 💖
 
 We run "Random Play" together, but honestly, every single day with you feels like the ultimate jackpot pull. No matter what crazy "Hollows" life decides to throw at us, I know we'll always co-op through them with maximum sync rates and absolute ease. 
@@ -607,12 +689,12 @@ I'm incredibly lucky to have you as my permanent co-op partner. I love you SSS-m
         if (letterTyped) return;
         letterTyped = true;
         typingContainer.textContent = "";
-        
+
         let charIndex = 0;
         function typeChar() {
             if (charIndex < letterText.length) {
                 const char = letterText.charAt(charIndex);
-                
+
                 if (char === "\n") {
                     typingContainer.appendChild(document.createElement("br"));
                 } else {
@@ -620,28 +702,28 @@ I'm incredibly lucky to have you as my permanent co-op partner. I love you SSS-m
                     span.textContent = char;
                     typingContainer.appendChild(span);
                 }
-                
+
                 // Play typewriter sound (only occasionally to avoid auditory overload!)
                 if (Math.random() > 0.4 && char !== " " && char !== "\n") {
                     playTypewriterClick();
                 }
-                
+
                 charIndex++;
                 // Speed up slightly for paragraphs to keep reading flow fast
                 const delay = char === "." || char === "!" || char === "?" ? 350 : 25;
                 setTimeout(typeChar, delay);
             }
         }
-        
+
         setTimeout(typeChar, 400);
     }
 
     // ==========================================================================
     // CANVAS DUST & CONFETTI PARTICLE SYSTEM
     // ==========================================================================
-    
+
     const confettiBtn = document.getElementById("btn-confetti");
-    
+
     confettiBtn.addEventListener("click", () => {
         playSuccessJingle();
         createConfettiStorm();
@@ -650,18 +732,18 @@ I'm incredibly lucky to have you as my permanent co-op partner. I love you SSS-m
     function createConfettiStorm() {
         const particleCount = 100;
         const colors = ['#ffd000', '#00ffcc', '#92d3f5', '#ff3b30', '#ffffff'];
-        
+
         for (let i = 0; i < particleCount; i++) {
             const particle = document.createElement("div");
             particle.className = "confetti-particle";
-            
+
             // Random properties
             const size = 5 + Math.random() * 8;
             const left = Math.random() * window.innerWidth;
             const animDuration = 2 + Math.random() * 3;
             const delay = Math.random() * 0.5;
             const color = colors[Math.floor(Math.random() * colors.length)];
-            
+
             particle.style.position = 'fixed';
             particle.style.top = '-10px';
             particle.style.left = `${left}px`;
@@ -673,18 +755,197 @@ I'm incredibly lucky to have you as my permanent co-op partner. I love you SSS-m
             particle.style.borderRadius = Math.random() > 0.5 ? '50%' : '2px';
             particle.style.pointerEvents = 'none';
             particle.style.transform = `rotate(${Math.random() * 360}deg)`;
-            
+
             // Fall animation using inline keyframes inject
             particle.style.animation = `fall-down ${animDuration}s linear ${delay}s forwards`;
-            
+
             document.body.appendChild(particle);
-            
+
             // Remove after animation finishes
             setTimeout(() => {
                 particle.remove();
             }, (animDuration + delay) * 1000);
         }
     }
+
+    // ==========================================================================
+    // CO-OP MEMORIES ZZZ CAROUSEL LOGIC
+    // ==========================================================================
+
+    function renderCoopCarousel() {
+        const track = document.getElementById("episode-carousel-track");
+        if (!track) return;
+        track.innerHTML = "";
+
+        coopMemories.forEach((memory, index) => {
+            const card = document.createElement("div");
+            card.className = `episode-card ${index === activeMemoryIndex ? 'active-card' : ''}`;
+            card.innerHTML = `
+                <div class="episode-card-image-wrapper">
+                    <img src="${memory.img}" alt="${memory.title}" class="episode-card-img">
+                    <span class="episode-card-tag">${memory.tag}</span>
+                    <span class="episode-card-overlay-indicator"></span>
+                </div>
+                <div class="episode-card-info">
+                    <span class="episode-card-stage">${memory.stage}</span>
+                    <h5 class="episode-card-title">${memory.title}</h5>
+                </div>
+                <div class="episode-card-index">${(index + 1).toString().padStart(2, '0')}</div>
+            `;
+
+            card.addEventListener("click", () => {
+                selectMemory(index);
+            });
+            track.appendChild(card);
+        });
+    }
+
+    function selectMemory(index) {
+        if (index === activeMemoryIndex) return;
+        activeMemoryIndex = index;
+
+        playClickSound();
+
+        // Trigger glitch overlay flash for screen transition effect
+        const glitchOverlay = document.getElementById("glitch-overlay");
+        if (glitchOverlay) {
+            glitchOverlay.classList.add("active");
+            setTimeout(() => {
+                glitchOverlay.classList.remove("active");
+            }, 100);
+        }
+
+        // Update cards visual active state
+        document.querySelectorAll(".episode-card").forEach((card, idx) => {
+            card.classList.toggle("active-card", idx === activeMemoryIndex);
+        });
+
+        // Update Left Details Panel with memory info
+        const memory = coopMemories[activeMemoryIndex];
+
+        const detailImg = document.getElementById("episode-detail-img");
+        const detailStage = document.getElementById("episode-detail-stage");
+        const detailSync = document.getElementById("episode-detail-sync");
+        const detailTitle = document.getElementById("episode-detail-title");
+        const detailDesc = document.getElementById("episode-detail-desc");
+
+        if (detailImg) detailImg.src = memory.img;
+        if (detailStage) detailStage.textContent = `${memory.stage} // ${memory.tag}`;
+        if (detailSync) detailSync.textContent = `SYNC: ${memory.sync}`;
+        if (detailTitle) detailTitle.textContent = memory.title.toUpperCase();
+        if (detailDesc) detailDesc.textContent = memory.desc;
+
+        // Auto scroll active card to view inside the scroll container
+        scrollActiveCardIntoView();
+    }
+
+    function scrollActiveCardIntoView() {
+        const container = document.getElementById("episode-carousel-container");
+        const activeCard = document.querySelector(".episode-card.active-card");
+        if (container && activeCard) {
+            const cardLeft = activeCard.offsetLeft;
+            const cardWidth = activeCard.clientWidth;
+            const containerWidth = container.clientWidth;
+            const scrollLeft = cardLeft - (containerWidth / 2) + (cardWidth / 2);
+            container.scrollTo({
+                left: scrollLeft,
+                behavior: "smooth"
+            });
+        }
+    }
+
+    function setupCarouselNavigation() {
+        const prevBtn = document.getElementById("carousel-prev");
+        const nextBtn = document.getElementById("carousel-next");
+
+        if (prevBtn) {
+            prevBtn.addEventListener("click", () => {
+                const prevIndex = (activeMemoryIndex - 1 + coopMemories.length) % coopMemories.length;
+                selectMemory(prevIndex);
+            });
+        }
+
+        if (nextBtn) {
+            nextBtn.addEventListener("click", () => {
+                const nextIndex = (activeMemoryIndex + 1) % coopMemories.length;
+                selectMemory(nextIndex);
+            });
+        }
+
+        // Keyboard navigation when timeline modal is active
+        document.addEventListener("keydown", (e) => {
+            const timelineModal = document.getElementById("modal-timeline");
+            if (timelineModal && !timelineModal.classList.contains("hidden")) {
+                if (e.key === "ArrowLeft") {
+                    const prevIndex = (activeMemoryIndex - 1 + coopMemories.length) % coopMemories.length;
+                    selectMemory(prevIndex);
+                } else if (e.key === "ArrowRight") {
+                    const nextIndex = (activeMemoryIndex + 1) % coopMemories.length;
+                    selectMemory(nextIndex);
+                }
+            }
+        });
+    }
+
+    // ==========================================================================
+    // FULLSCREEN LIGHTBOX PHOTO VIEWING LOGIC
+    // ==========================================================================
+
+    function setupPhotoLightbox() {
+        const playbackBtn = document.getElementById("btn-sync-playback");
+        const detailImg = document.getElementById("episode-detail-img");
+        const lightbox = document.getElementById("modal-lightbox");
+        const lightboxImg = document.getElementById("lightbox-img");
+        const lightboxCaption = document.getElementById("lightbox-caption");
+        const lightboxClose = document.getElementById("btn-lightbox-close");
+
+        function openLightbox() {
+            if (!lightbox || !lightboxImg) return;
+
+            const memory = coopMemories[activeMemoryIndex];
+
+            lightboxImg.src = memory.img;
+            if (lightboxCaption) {
+                lightboxCaption.textContent = `${memory.stage} - ${memory.title}: "${memory.desc}"`;
+            }
+
+            playTapeLatchSound();
+            lightbox.classList.remove("hidden");
+
+            // Trigger confetti storm on memory play for a beautiful celebration of the memory
+            createConfettiStorm();
+        }
+
+        if (playbackBtn) {
+            playbackBtn.addEventListener("click", openLightbox);
+        }
+
+        if (detailImg) {
+            detailImg.style.cursor = "pointer";
+            detailImg.addEventListener("click", openLightbox);
+        }
+
+        if (lightboxClose) {
+            lightboxClose.addEventListener("click", () => {
+                playTapeLatchSound();
+                lightbox.classList.add("hidden");
+            });
+        }
+
+        if (lightbox) {
+            lightbox.addEventListener("click", (e) => {
+                if (e.target === lightbox) {
+                    playTapeLatchSound();
+                    lightbox.classList.add("hidden");
+                }
+            });
+        }
+    }
+
+    // Initialize Co-Op Carousel elements
+    renderCoopCarousel();
+    setupCarouselNavigation();
+    setupPhotoLightbox();
 
     // Inject fall animation stylesheet rules
     const style = document.createElement("style");

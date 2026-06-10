@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=no, maximum-scale=1.0">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>Random Play // S-Rank Birthday Protocol</title>
     <!-- Google Fonts: Skewed high-energy headers (Outfit), Futura-like (Poppins), & monospaced technical codes (Space Mono) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@1,700;1,800;1,900&display=swap"
+        rel="stylesheet">
     <!-- FontAwesome for gaming and tech icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Main Style Sheet -->
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <!-- CRT Overlay across the entire screen for scanning scanlines and VHS flicker -->
@@ -25,13 +30,16 @@
     <section class="screen-section" id="boot-screen">
         <div class="boot-container">
             <div class="boot-header-stripes"></div>
-            
+
             <div class="boot-terminal">
                 <div class="terminal-logs" id="boot-logs">
                     <p class="log-line">> INITIALIZING RANDOM PLAY SYSTEM...</p>
-                    <p class="log-line">> CONNECTING TO HOLLOW DEEP DIVE MAINBOARD... <span class="text-success">[SUCCESS]</span></p>
-                    <p class="log-line">> SEARCHING FOR SIGNATURE ID: <span class="text-accent">S-RANK_SWEETHEART</span>...</p>
-                    <p class="log-line">> SIGNAL ENERGY: <span class="text-warning">9999+ CUTE_CELLS/SEC</span> (OVERLOAD WARNING!)</p>
+                    <p class="log-line">> CONNECTING TO HOLLOW DEEP DIVE MAINBOARD... <span
+                            class="text-success">[SUCCESS]</span></p>
+                    <p class="log-line">> SEARCHING FOR SIGNATURE ID: <span
+                            class="text-accent">S-RANK_SWEETHEART</span>...</p>
+                    <p class="log-line">> SIGNAL ENERGY: <span class="text-warning">9999+ CUTE_CELLS/SEC</span>
+                        (OVERLOAD WARNING!)</p>
                     <p class="log-line">> BOOTING MASCOT PROGRAM: <span class="text-info">Cinnamoroll.exe</span>...</p>
                 </div>
 
@@ -51,7 +59,8 @@
                 <div class="login-auth-box">
                     <label for="proxy-name" class="auth-label">ENTER PROXY ACCESS NAME:</label>
                     <div class="input-wrapper">
-                        <input type="text" id="proxy-name" placeholder="Type her name..." autocomplete="off" class="auth-input">
+                        <input type="text" id="proxy-name" placeholder="Type her name..." autocomplete="off"
+                            class="auth-input">
                         <span class="input-bracket left">[</span>
                         <span class="input-bracket right">]</span>
                     </div>
@@ -60,7 +69,7 @@
                     </button>
                 </div>
             </div>
-            
+
             <div class="boot-footer">
                 <span class="footer-code">RP-SYSTEM-V2.6.2</span>
                 <span class="footer-warning">HAZARD WARNING: EXTREME SWEETNESS AHEAD</span>
@@ -79,7 +88,8 @@
             <div class="hazard-ticker">
                 <div class="ticker-wrap">
                     <span class="ticker-item">WARNING: S-RANK ENERGY FIELD EXPANDING</span>
-                    <span class="ticker-item">★ PROXY AUTHENTICATED: <span id="display-proxy-name">SWEETHEART</span> ★</span>
+                    <span class="ticker-item">★ PROXY AUTHENTICATED: <span id="display-proxy-name">SWEETHEART</span>
+                        ★</span>
                     <span class="ticker-item">HAPPY BIRTHDAY PROTOCOL STAGE 01 ACTIVE</span>
                     <span class="ticker-item">HOLLOW DETECTED // RETRIEVING MEMORIES</span>
                 </div>
@@ -104,10 +114,12 @@
                 <div class="mascot-interactive-area">
                     <div class="dialogue-bubble">
                         <div class="bubble-arrow"></div>
-                        <p class="dialogue-text" id="mascot-speech">Hello, Proxy! Welcome back to Random Play. Click on the TV monitors behind me to unlock your S-Rank Birthday signals!</p>
+                        <p class="dialogue-text" id="mascot-speech">Hello, Proxy! Welcome back to Random Play. Click on
+                            the TV monitors behind me to unlock your S-Rank Birthday signals!</p>
                     </div>
                     <div class="mascot-wrapper">
-                        <img src="assets/cinnamoroll_face.png" alt="Mascot Cinnamoroll" class="mascot-img-active" id="mascot-trigger">
+                        <img src="assets/cinnamoroll_face.png" alt="Mascot Cinnamoroll" class="mascot-img-active"
+                            id="mascot-trigger">
                         <!-- Holographic ring under mascot -->
                         <div class="holo-base"></div>
                     </div>
@@ -190,7 +202,8 @@
                 <div class="vhs-shelf">
                     <span class="shelf-tag">COZY SHELF</span>
                     <div class="tape-stack">
-                        <div class="vhs-tape tape-yellow" id="tape-retro"><span class="tape-label">LO-FI RETRO</span></div>
+                        <div class="vhs-tape tape-yellow" id="tape-retro"><span class="tape-label">LO-FI RETRO</span>
+                        </div>
                         <div class="vhs-tape tape-cyan"><span class="tape-label">OUR MEMORIES</span></div>
                         <div class="vhs-tape tape-black"><span class="tape-label">HOLLOW C-09</span></div>
                     </div>
@@ -221,7 +234,7 @@
                 </div>
                 <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
             </div>
-            
+
             <div class="modal-body agent-card-layout">
                 <!-- Left: Profile Dossier Frame -->
                 <div class="agent-profile-section">
@@ -288,17 +301,21 @@
                     <div class="agent-bio-traits">
                         <span class="section-subtitle">RECOMMENDED SYNERGY TEAMS</span>
                         <div class="trait-tags">
-                            <span class="tag-chip text-primary"><i class="fa-solid fa-circle-nodes"></i> Cinnamoroll Cozy Club</span>
-                            <span class="tag-chip text-info"><i class="fa-solid fa-mug-hot"></i> Coffee & Sleep Squad</span>
-                            <span class="tag-chip text-warning"><i class="fa-solid fa-gift"></i> Birthday S-Ranker</span>
+                            <span class="tag-chip text-primary"><i class="fa-solid fa-circle-nodes"></i> Cinnamoroll
+                                Cozy Club</span>
+                            <span class="tag-chip text-info"><i class="fa-solid fa-mug-hot"></i> Coffee & Sleep
+                                Squad</span>
+                            <span class="tag-chip text-warning"><i class="fa-solid fa-gift"></i> Birthday
+                                S-Ranker</span>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="modal-footer">
                 <div class="footer-alert-bar">
-                    <i class="fa-solid fa-circle-info text-warning"></i> ACTIVE SYNERGY DETECTED: 100% COMPATIBILITY WITH ACTIVE PROXY
+                    <i class="fa-solid fa-circle-info text-warning"></i> ACTIVE SYNERGY DETECTED: 100% COMPATIBILITY
+                    WITH ACTIVE PROXY
                 </div>
             </div>
         </div>
@@ -320,14 +337,15 @@
                     <div class="cassette-tape neon-border-glow">
                         <div class="cassette-frame-stripes"></div>
                         <div class="tape-label-sticker">
-                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3b/c0/c5/3bc0c51d-33f2-ee19-e148-6d8f2c50df24/25UMGIM90843.rgb.jpg/300x300bb.jpg" alt="Who Knows cover art" class="cassette-cover-art" id="cassette-cover-art">
+                            <img src="https://is1-ssl.mzstatic.com/image/thumb/Music211/v4/3b/c0/c5/3bc0c51d-33f2-ee19-e148-6d8f2c50df24/25UMGIM90843.rgb.jpg/300x300bb.jpg"
+                                alt="Who Knows cover art" class="cassette-cover-art" id="cassette-cover-art">
                             <div class="sticker-copy">
                                 <div class="sticker-line">RANDOM PLAY SOUND DECK</div>
                                 <div class="sticker-title text-accent" id="cassette-playlist-title">WHO KNOWS</div>
                                 <div class="sticker-artist" id="cassette-playlist-artist">DANIEL CAESAR</div>
                             </div>
                         </div>
-                        
+
                         <div class="tape-reels">
                             <!-- Left Reel -->
                             <div class="tape-reel-window">
@@ -371,9 +389,10 @@
                     <!-- Song Metadata -->
                     <div class="track-metadata">
                         <span class="track-title" id="current-track-name">Who Knows - Daniel Caesar</span>
-                        <div class="track-timer"><span id="track-time-elapsed">00:00</span> / <span id="track-total-duration">03:46</span></div>
+                        <div class="track-timer"><span id="track-time-elapsed">00:00</span> / <span
+                                id="track-total-duration">03:46</span></div>
                     </div>
-                    
+
                     <div class="progress-bar-container" id="music-progress-wrapper">
                         <div class="progress-bar-fill" id="music-progress-fill" style="width: 0%;"></div>
                     </div>
@@ -407,10 +426,11 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="modal-footer">
                 <div class="footer-alert-bar info-alert">
-                    <i class="fa-solid fa-music"></i> NOTE: SELECT A TAPE TO LOAD ITS SONG CARD, COVER ART, AND AUDIO FILE.
+                    <i class="fa-solid fa-music"></i> NOTE: SELECT A TAPE TO LOAD ITS SONG CARD, COVER ART, AND AUDIO
+                    FILE.
                 </div>
             </div>
         </div>
@@ -418,7 +438,7 @@
 
     <!-- MODAL 3: CO-OP MISSION TIMELINE (Photo Log) -->
     <div class="modal-overlay hidden" id="modal-timeline">
-        <div class="modal-container timeline-modal">
+        <div class="modal-container timeline-modal zzz-episode-modal">
             <div class="modal-header">
                 <div class="header-tab">
                     <span class="tab-label">CO-OP ARCHIVE LOGS</span>
@@ -426,57 +446,54 @@
                 <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
             </div>
 
-            <div class="modal-body timeline-body scrollable">
-                <div class="timeline-header-block">
-                    <h3 class="title-skew text-success">OUR MISSION TIMELINE</h3>
-                    <p class="timeline-desc">Chronological synchronization of our favorite adventures, snack co-ops, and cozy moments!</p>
+            <div class="modal-body zzz-episode-body">
+                <!-- Left Column: Selected Episode Details -->
+                <div class="episode-detail-panel">
+                    <div class="episode-preview-frame">
+                        <img id="episode-detail-img" src="assets/Us together 1.jpg" alt="Selected memory preview"
+                            class="episode-detail-img">
+                        <div class="episode-preview-overlay">
+                            <span class="status-badge"><i class="fa-solid fa-compact-disc spinning-slow"></i> MEMORY
+                                SYNC ACTIVE</span>
+                        </div>
+                        <div class="crt-noise"></div>
+                        <div class="hologram-flicker-line"></div>
+                    </div>
+
+                    <div class="episode-detail-info">
+                        <div class="episode-meta-header">
+                            <span class="episode-stage-tag" id="episode-detail-stage">STAGE 01</span>
+                            <span class="episode-sync-badge" id="episode-detail-sync">SYNC: 100%</span>
+                        </div>
+                        <h3 class="episode-detail-title" id="episode-detail-title">SIGNAL LOCKED</h3>
+                        <p class="episode-detail-desc" id="episode-detail-desc">The moment our waves aligned and we
+                            started exploring life's Hollows together. The sweetest signal overload.</p>
+
+                        <div class="episode-actions">
+                            <button class="btn-zzz btn-neon btn-block" id="btn-sync-playback">
+                                <span class="btn-skew-content"><i class="fa-solid fa-circle-play"></i> PLAYBACK
+                                    MEMORY</span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
 
-                <!-- Custom Vertical Timeline in Comic/Street styling -->
-                <div class="vertical-timeline">
-                    <!-- Timeline Line -->
-                    <div class="timeline-thread"></div>
-
-                    <!-- Entry 1 -->
-                    <div class="timeline-entry left-entry">
-                        <div class="entry-pointer"></div>
-                        <div class="entry-content">
-                            <div class="entry-tag text-success">STAGE 01 // FIRST ENCOUNTER</div>
-                            <h4 class="entry-title">Signal Locked</h4>
-                            <p class="entry-text">The moment our waves aligned and we started exploring life's Hollows together. The sweetest signal overload.</p>
-                            <!-- Decorative vector drawing or border placeholder -->
-                            <div class="timeline-photo-placeholder">
-                                <i class="fa-solid fa-heart text-warning pulsing-slow"></i>
-                                <span>[ LOCK SIGNAL: FIRST CO-OP ]</span>
-                            </div>
+                <!-- Right Column: Card Carousel selection list -->
+                <div class="episode-carousel-panel">
+                    <div class="carousel-header">
+                        <h4 class="title-skew text-success">MEMORIES REEL</h4>
+                        <div class="carousel-controls">
+                            <button class="carousel-nav-btn" id="carousel-prev" title="Previous memory"><i
+                                    class="fa-solid fa-chevron-left"></i></button>
+                            <button class="carousel-nav-btn" id="carousel-next" title="Next memory"><i
+                                    class="fa-solid fa-chevron-right"></i></button>
                         </div>
                     </div>
 
-                    <!-- Entry 2 -->
-                    <div class="timeline-entry right-entry">
-                        <div class="entry-pointer"></div>
-                        <div class="entry-content">
-                            <div class="entry-tag text-info">STAGE 02 // FOOD CO-OP</div>
-                            <h4 class="entry-title">Sweet Attack!</h4>
-                            <p class="entry-text">Shared dinners, custom drinks, and all the sugary treats we raided in the safe zones. High food energy multipliers!</p>
-                            <div class="timeline-photo-placeholder">
-                                <i class="fa-solid fa-utensils text-info"></i>
-                                <span>[ MEMORY CHIP: FOOD MISSIONS ]</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Entry 3 -->
-                    <div class="timeline-entry left-entry">
-                        <div class="entry-pointer"></div>
-                        <div class="entry-content">
-                            <div class="entry-tag text-primary">STAGE 03 // COZY NIGHTS</div>
-                            <h4 class="entry-title">Napping Protocol</h4>
-                            <p class="entry-text">Cuddling on the couch, catching up on shows, and taking the absolute highest S-rank afternoon naps together.</p>
-                            <div class="timeline-photo-placeholder">
-                                <i class="fa-solid fa-moon text-primary"></i>
-                                <span>[ CHIP SET: COZY SYNC ]</span>
-                            </div>
+                    <!-- Horizontal Carousel Scroll Track -->
+                    <div class="episode-carousel-container" id="episode-carousel-container">
+                        <div class="episode-carousel-track" id="episode-carousel-track">
+                            <!-- Dynamic Cards are generated in app.js -->
                         </div>
                     </div>
                 </div>
@@ -484,7 +501,8 @@
 
             <div class="modal-footer">
                 <div class="footer-alert-bar">
-                    <i class="fa-solid fa-plus-circle text-success"></i> COMPILING NEW CO-OP MEMORY PROTOCOLS EVERY DAY...
+                    <i class="fa-solid fa-circle-info text-success"></i> ROTATE MEMORY REEL TO SYNCHRONIZE S-RANK
+                    PATHWAYS
                 </div>
             </div>
         </div>
@@ -495,7 +513,8 @@
         <div class="modal-container letter-modal">
             <div class="modal-header">
                 <div class="header-tab warning-tab">
-                    <span class="tab-label text-warning"><i class="fa-solid fa-triangle-exclamation"></i> URGENT: BIRTHDAY DECRYPT</span>
+                    <span class="tab-label text-warning"><i class="fa-solid fa-triangle-exclamation"></i> URGENT:
+                        BIRTHDAY DECRYPT</span>
                 </div>
                 <button class="btn-close" data-close><i class="fa-solid fa-xmark"></i></button>
             </div>
@@ -504,7 +523,8 @@
                 <!-- Cinnamoroll holographic popup image -->
                 <div class="bday-gift-box">
                     <div class="mascot-holo-ring">
-                        <img src="assets/cinnamoroll_face.png" alt="Happy Birthday Cinnamoroll" class="bday-celebrant-img">
+                        <img src="assets/cinnamoroll_face.png" alt="Happy Birthday Cinnamoroll"
+                            class="bday-celebrant-img">
                         <div class="holo-glitch"></div>
                     </div>
                     <div class="neon-badge-alert text-warning-glow">S-RANK ENVELOPE OPENED</div>
@@ -513,8 +533,9 @@
                 <!-- Decrypted Love Letter Container -->
                 <div class="declassified-letter">
                     <div class="letter-stamp-stripes"></div>
-                    <h3 class="letter-greeting">DEAR <span id="letter-proxy-name" class="text-warning font-heavy">PROXY</span>,</h3>
-                    
+                    <h3 class="letter-greeting">DEAR <span id="letter-proxy-name"
+                            class="text-warning font-heavy">PROXY</span>,</h3>
+
                     <div class="letter-paragraph" id="letter-typing-area">
                         <!-- Content will type out dynamically using JS for an authentic digital report look -->
                     </div>
@@ -529,13 +550,25 @@
 
             <div class="modal-footer">
                 <button class="btn-zzz btn-neon" id="btn-confetti">
-                    <span class="btn-skew-content"><i class="fa-solid fa-wand-magic-sparkles"></i> TRIGGER DUST CONFETTI</span>
+                    <span class="btn-skew-content"><i class="fa-solid fa-wand-magic-sparkles"></i> TRIGGER DUST
+                        CONFETTI</span>
                 </button>
             </div>
+        </div>
+    </div>
+
+    <!-- FULLSCREEN LIGHTBOX FOR PHOTOS -->
+    <div class="modal-overlay hidden" id="modal-lightbox">
+        <div class="lightbox-container">
+            <button class="btn-close lightbox-close-btn" id="btn-lightbox-close"><i
+                    class="fa-solid fa-xmark"></i></button>
+            <img id="lightbox-img" src="" alt="Fullscreen view" class="lightbox-img">
+            <div class="lightbox-caption" id="lightbox-caption"></div>
         </div>
     </div>
 
     <!-- MAIN APP SCRIPT -->
     <script src="app.js"></script>
 </body>
+
 </html>
