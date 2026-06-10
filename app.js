@@ -73,16 +73,16 @@ document.addEventListener("DOMContentLoaded", () => {
             title: "Neon Rhythms",
             tag: "CONCERT BEATS",
             sync: "99%",
-            img: "assets/Concert.jpg",
-            desc: "Feeling the bass vibrate through our chests at the live concert."
+            img: "assets/Concerto.png",
+            desc: "Listening to the music we love together."
         },
         {
             stage: "STAGE 09",
             title: "Infinite Adventure",
-            tag: "ALWAYS SYNCED",
+            tag: "100000%",
             sync: "EX Limit",
             img: "assets/image.jpg",
-            desc: "A special snapshot of our infinite journey. Compiling new co-op memory protocols every single day."
+            desc: "Looking forward to more special moments with you."
         }
     ];
 
@@ -677,7 +677,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const letterText = `Happy Birthday to the most amazing S-Rank Sensation in my entire universe! 💖
 
-We run "Random Play" together, but honestly, every single day with you feels like the ultimate jackpot pull. No matter what crazy "Hollows" life decides to throw at us, I know we'll always co-op through them with maximum sync rates and absolute ease. 
+I know I'm proceeding to a new chapter in life but I always can't help but be glad that you're here with me. Throughout the ups and downs and the multitude of experiences, I'm always glad that you're there by my side. I'm blessed to have met you and to be your boyfriend.
 
 Thank you for being my anchor, my favorite sleeping partner, and the absolute sweetest energy source in existence. Cinnamoroll and I have locked down this declassified security sector to guarantee that your new level cap is filled with endless cake, cozy blankets, SSS-class love, and beautiful adventures. 
 
